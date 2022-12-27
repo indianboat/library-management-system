@@ -1,9 +1,7 @@
 import Head from 'next/head'
-// import Image from 'next/image'
-// import { Inter } from '@next/font/google'
-// import styles from '../styles/Home.module.css'
+import { Poppins } from '@next/font/google';
 
-// const inter = Inter({ subsets: ['latin'] })
+const pop = Poppins({ weight: ["100", "200" , "300", "400"] })
 
 export default function Home() {
   return (
@@ -15,7 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        
+        {/* <h2 style={pop.style}>Library Management System</h2> */}
       </main>
     </>
   )
