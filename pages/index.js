@@ -17,7 +17,7 @@ export default function Home() {
       </Head>
 
       <div className="sm:container mx-auto md:my-12 sm:my-6 my-6">
-        <Grid.Container gap={2}>
+        <Grid.Container>
           <Grid xs={12} md={6}>
             <div className="px-3 py-3">
               {/* <div className="font-thin">Welcome</div> */}
@@ -48,7 +48,7 @@ export default function Home() {
             </div>
           </Grid>
 
-          {/* <Grid>
+          {/* <Grid className="mt-12">
             <div className="px-3 py-3 border">
               <Text size={35}>Features</Text>
             </div>
