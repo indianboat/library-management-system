@@ -1,9 +1,12 @@
-import Head from 'next/head'
-import { Poppins } from '@next/font/google';
-
-const pop = Poppins({ weight: ["100", "200" , "300", "400"] })
+import Head from "next/head";
+import Image from "next/legacy/image";
+import { Grid, Text } from "@nextui-org/react";
 
 export default function Home() {
+  // const myLoader = ({ src, width, quality }) => {
+  //   return `https://example.com/${src}?w=${width}&q=${quality || 75}`
+  // }
+
   return (
     <>
       <Head>
@@ -12,9 +15,46 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        {/* <h2 style={pop.style}>Library Management System</h2> */}
-      </main>
+
+      <div className="sm:container mx-auto md:my-12 sm:my-6 my-6">
+        <Grid.Container gap={2}>
+          <Grid xs={12} md={6}>
+            <div className="px-3 py-3">
+              {/* <div className="font-thin">Welcome</div> */}
+              <div
+                className="text-6xl font-bold md:text-start sm:text-center"
+                style={{ lineHeight: "4.5rem" }}
+              >
+                Manage Your <br /> <i>Library</i> <br /> at one place
+              </div>
+              <p
+                className="sm:mt-4"
+                style={{
+                  lineHeight: "2rem",
+                  letterSpacing: "0.5px",
+                  textAlign: "justify",
+                }}
+              >
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Recusandae nemo corporis, sint excepturi, sequi temporibus harum
+                dolorum consequuntur iusto repudiandae veniam iste magni
+                obcaecati quia quos? Alias illo deserunt libero.
+              </p>
+            </div>
+          </Grid>
+          <Grid xs={12} md={6} className="flex justify-center" >
+            <div className="px-3 py-3 flex">
+              <Image src={"/home_image.jpg"} width={600} height={300}/>
+            </div>
+          </Grid>
+
+          {/* <Grid>
+            <div className="px-3 py-3 border">
+              <Text size={35}>Features</Text>
+            </div>
+          </Grid> */}
+        </Grid.Container>
+      </div>
     </>
-  )
+  );
 }
