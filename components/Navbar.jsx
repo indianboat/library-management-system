@@ -11,7 +11,7 @@ const NavbarBody = () => {
         <Navbar.Toggle showIn="xs" />
         <Navbar.Brand css={{ "@xs": { w: "12%" } }}>
           <Text b color="inherit" hideIn="xs">
-            LMS
+            Library Manager
           </Text>
         </Navbar.Brand>
 
@@ -109,8 +109,8 @@ const NavbarBody = () => {
         </Navbar.Content>
 
         <Navbar.Content>
-          <Navbar.Link color="secondary" href="/">
-            Get Started
+          <Navbar.Link css={{color:"$blue900"}} href="#">
+            Sign up
           </Navbar.Link>
         </Navbar.Content>
 

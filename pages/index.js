@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/legacy/image";
-import { Grid, Text } from "@nextui-org/react";
+import { Button, Grid, Link, Text } from "@nextui-org/react";
 
 export default function Home() {
   // const myLoader = ({ src, width, quality }) => {
@@ -19,32 +19,41 @@ export default function Home() {
       <div className="sm:container mx-auto md:my-12 sm:my-6 my-6">
         <Grid.Container>
           <Grid xs={12} md={6}>
-            <div className="px-3 py-3">
-              {/* <div className="font-thin">Welcome</div> */}
-              <div
-                className="text-6xl font-bold md:text-start sm:text-center"
-                style={{ lineHeight: "4.5rem" }}
-              >
+            <div className="px-3 py-3 md:text-start sm:text-center text-center">
+              {/* <div className="text-6xl font-bold md:text-start sm:text-center" style={{ lineHeight: "4.5rem" }}>
                 Manage Your <br /> <i>Library</i> <br /> at one place
-              </div>
-              <p
-                className="sm:mt-4"
-                style={{
-                  lineHeight: "2rem",
-                  letterSpacing: "0.5px",
-                  textAlign: "justify",
-                }}
-              >
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Recusandae nemo corporis, sint excepturi, sequi temporibus harum
-                dolorum consequuntur iusto repudiandae veniam iste magni
-                obcaecati quia quos? Alias illo deserunt libero.
+              </div> */}
+
+              <Text h1 size={60} css={{ textGradient: "45deg, #0093E9 -20%, #80D0C7 50%", lineHeight:"4.5rem" }} weight="bold">
+              Manage Your
+              </Text>
+              <Text h1 size={60} css={{ textGradient: "45deg, #0093E9 -20%, #80D0C7 50%", lineHeight:"4.5rem", fontStyle:"italic" }} weight="bold">
+                Library
+              </Text>
+              <Text h1 size={60} css={{ textGradient: "45deg, #0093E9 -20%, #80D0C7 50%", lineHeight:"4.5rem" }} weight="bold">
+              at one place
+              </Text>
+
+              <p className="sm:mt-4" style={{ lineHeight: "2rem", letterSpacing: "0.5px", textAlign: "justify" }}>
+              Library management systems are designed to manage the movement of books and maintain records of the members in a library. Library management focuses on the possibility of search for books by title, author or subject by the member.
               </p>
+              {/* <Button color="secondary" css={{backgroundColor:"$blue900 !important"}}>Get Started</Button> */}
+              <Link
+                css={{
+                  color: "$blue100",
+                  backgroundColor: "$blue900",
+                  borderRadius: "$3xl",
+                }}
+                className="border px-6 py-1 mt-6"
+                href="#"
+              >
+                Get Started
+              </Link>
             </div>
           </Grid>
-          <Grid xs={12} md={6} className="flex justify-center" >
+          <Grid xs={12} md={6} className="flex justify-center">
             <div className="px-3 py-3 flex">
-              <Image src={"/home_image.jpg"} width={600} height={300}/>
+              <Image src={"/home_image.jpg"} width={600} height={300} />
             </div>
           </Grid>
 
