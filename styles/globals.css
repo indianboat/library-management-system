@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 
-/* html,
+html,
 body {
   scroll-behavior: smooth;
   height: 100%;
-} */ 
+} 
 
 .layout {
   display: flex;

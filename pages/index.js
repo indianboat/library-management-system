@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/legacy/image";
-import { Button, Grid, Link, Text } from "@nextui-org/react";
+import { Button, Grid, Link, Text, Card, Container } from "@nextui-org/react";
 
 export default function Home() {
   // const myLoader = ({ src, width, quality }) => {
@@ -16,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="sm:container mx-auto md:my-12 sm:my-6 my-6">
+      <div className="container mx-auto md:my-8 sm:my-6 my-6">
         <Grid.Container>
           <Grid xs={12} md={6}>
             <div className="px-3 py-3 md:text-start sm:text-center text-center">
@@ -24,18 +24,53 @@ export default function Home() {
                 Manage Your <br /> <i>Library</i> <br /> at one place
               </div> */}
 
-              <Text h1 size={60} css={{ textGradient: "45deg, #0093E9 -20%, #80D0C7 50%", lineHeight:"4.5rem" }} weight="bold">
-              Manage Your
+              <Text
+                h1
+                size={60}
+                css={{
+                  textGradient: "45deg, #0093E9 -20%, #80D0C7 50%",
+                  lineHeight: "4.5rem",
+                }}
+                weight="bold"
+              >
+                Manage Your
               </Text>
-              <Text h1 size={60} css={{ textGradient: "45deg, #0093E9 -20%, #80D0C7 50%", lineHeight:"4.5rem", fontStyle:"italic" }} weight="bold">
+              <Text
+                h1
+                size={60}
+                css={{
+                  textGradient: "45deg, #0093E9 -20%, #80D0C7 50%",
+                  lineHeight: "4.5rem",
+                  fontStyle: "italic",
+                }}
+                weight="bold"
+              >
                 Library
               </Text>
-              <Text h1 size={60} css={{ textGradient: "45deg, #0093E9 -20%, #80D0C7 50%", lineHeight:"4.5rem" }} weight="bold">
-              at one place
+              <Text
+                h1
+                size={60}
+                css={{
+                  textGradient: "45deg, #0093E9 -20%, #80D0C7 50%",
+                  lineHeight: "4.5rem",
+                }}
+                weight="bold"
+              >
+                at one place
               </Text>
 
-              <p className="sm:mt-4" style={{ lineHeight: "2rem", letterSpacing: "0.5px", textAlign: "justify" }}>
-              Library management systems are designed to manage the movement of books and maintain records of the members in a library. Library management focuses on the possibility of search for books by title, author or subject by the member.
+              <p
+                className="md:mt-4 sm:mt-4 mt-6"
+                style={{
+                  lineHeight: "2rem",
+                  letterSpacing: "0.5px",
+                  textAlign: "justify",
+                }}
+              >
+                Library management systems are designed to manage the movement
+                of books and maintain records of the members in a library.
+                Library management focuses on the possibility of search for
+                books by title, author or subject by the member.
               </p>
               {/* <Button color="secondary" css={{backgroundColor:"$blue900 !important"}}>Get Started</Button> */}
               <Link
@@ -44,7 +79,7 @@ export default function Home() {
                   backgroundColor: "$blue900",
                   borderRadius: "$3xl",
                 }}
-                className="border px-6 py-1 mt-6"
+                className="px-6 py-1 mt-6"
                 href="#"
               >
                 Get Started
@@ -56,13 +91,76 @@ export default function Home() {
               <Image src={"/home_image.jpg"} width={600} height={300} />
             </div>
           </Grid>
-
-          {/* <Grid className="mt-12">
-            <div className="px-3 py-3 border">
-              <Text size={35}>Features</Text>
-            </div>
-          </Grid> */}
         </Grid.Container>
+      </div>
+
+      <div className="container max-w-screen-2xl mx-auto md:my-28 sm:my-18 my-12 bg-slate-400">
+        <div className="text-center">
+          <Text id="features" size={35}>
+            Features
+          </Text>
+        </div>
+        <div className="border">
+          <Grid.Container className="mx-auto">
+
+
+            
+            <Grid md={6} sm={6} xs={12} className="flex px-2 py-2">
+              <Card variant="bordered" className="flex md:flex-row p-6 gap-3">
+                <Grid className="sm:text-center flex sm:justify-center justify-center place-items-center border">
+                  <Image
+                    src={"/features/data-management.png"}
+                    alt="data-management"
+                    width={160}
+                    height={160}
+                  ></Image>
+                </Grid>
+                <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col border">
+                  <Text h4 b css={{ lineHeight: "$normal", mb:"10px" }}>
+                    Easy to Manage Books
+                  </Text>
+                  <Text css={{ lineHeight: "$normal", textAlign:"justify" }}>
+                    Maintains the information about the books present in the
+                    library, their authors, the members of library to whom books
+                    are issued, library staff and all.
+                  </Text>
+                </Grid>
+              </Card>
+            </Grid>
+
+
+
+            <Grid md={6} sm={6} xs={12} className="flex px-2 py-2">
+              <Card variant="bordered" className="flex md:flex-row p-6 gap-3">
+                <Grid className="sm:text-center flex sm:justify-center justify-center place-items-center border">
+                  <Image
+                    src={"/features/time.png"}
+                    alt="data-management"
+                    width={160}
+                    height={160}
+                  ></Image>
+                </Grid>
+                <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col border">
+                  <Text h4 b css={{ lineHeight: "$normal", mb:"10px" }}>
+                  Time Saving
+                  </Text>
+                  <Text css={{ lineHeight: "$normal", textAlign:"justify" }}>
+                  Stock checking and verification of books in the library can be done within a few hours. The automated system saves a considerable amount of time as opposed to the manual system.
+                  </Text>
+                </Grid>
+              </Card>
+            </Grid>
+
+
+    
+
+
+
+
+
+
+          </Grid.Container>
+        </div>
       </div>
     </>
   );
