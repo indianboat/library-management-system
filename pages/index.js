@@ -142,7 +142,7 @@ export default function Home() {
                 </Grid>
                 <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col border">
                   <Text h4 b css={{ lineHeight: "$normal", mb:"10px" }}>
-                  Time Saving
+                  Time Saving time saving
                   </Text>
                   <Text css={{ lineHeight: "$normal", textAlign:"justify" }}>
                   Stock checking and verification of books in the library can be done within a few hours. The automated system saves a considerable amount of time as opposed to the manual system.
