@@ -19,7 +19,7 @@ export default function Home() {
       <div className="container mx-auto md:my-8 sm:my-6 my-6">
         <Grid.Container>
           <Grid xs={12} md={6}>
-            <div className="px-3 py-3 md:text-start sm:text-center text-center">
+            <div className="px-4 py-4 md:text-start sm:text-center text-center">
               {/* <div className="text-6xl font-bold md:text-start sm:text-center" style={{ lineHeight: "4.5rem" }}>
                 Manage Your <br /> <i>Library</i> <br /> at one place
               </div> */}
@@ -63,7 +63,7 @@ export default function Home() {
                 className="md:mt-4 sm:mt-4 mt-6"
                 style={{
                   lineHeight: "2rem",
-                  letterSpacing: "0.5px",
+                  letterSpacing: "0.1px",
                   textAlign: "justify",
                 }}
               >
@@ -94,32 +94,34 @@ export default function Home() {
         </Grid.Container>
       </div>
 
-      <div className="container max-w-screen-2xl mx-auto md:my-28 sm:my-18 my-12 bg-slate-400">
+      <div className="container max-w-screen-2xl mx-auto md:my-28 sm:my-18 my-12 pb-12 bg-slate-100">
         <div className="text-center">
           <Text id="features" size={35}>
             Features
           </Text>
         </div>
-        <div className="border">
+        <div className="">
           <Grid.Container className="mx-auto">
-
-
-            
-            <Grid md={6} sm={6} xs={12} className="flex px-2 py-2">
-              <Card variant="bordered" className="flex md:flex-row p-6 gap-3">
-                <Grid className="sm:text-center flex sm:justify-center justify-center place-items-center border">
-                  <Image
-                    src={"/features/data-management.png"}
-                    alt="data-management"
-                    width={160}
-                    height={160}
-                  ></Image>
-                </Grid>
-                <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col border">
-                  <Text h4 b css={{ lineHeight: "$normal", mb:"10px" }}>
+            <Grid md={6} sm={6} xs={12} className="flex px-6 py-4">
+              <Card variant="bordered" className="border-0 shadow-xl  flex md:flex-row p-6 gap-6">
+                <div className="flex justify-center">
+                  <Grid
+                    style={{ minWidth: "100px", maxWidth: "100px" }}
+                    className="flex place-items-center"
+                  >
+                    <Image
+                      src={"/features/data-management.png"}
+                      alt="data-management"
+                      width={260}
+                      height={260}
+                    ></Image>
+                  </Grid>
+                </div>
+                <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col">
+                  <Text h4 b css={{ lineHeight: "$normal", mb: "10px" }}>
                     Easy to Manage Books
                   </Text>
-                  <Text css={{ lineHeight: "$normal", textAlign:"justify" }}>
+                  <Text css={{ lineHeight: "$normal", textAlign: "justify", letterSpacing: "0.1px", }}>
                     Maintains the information about the books present in the
                     library, their authors, the members of library to whom books
                     are issued, library staff and all.
@@ -128,37 +130,84 @@ export default function Home() {
               </Card>
             </Grid>
 
-
-
-            <Grid md={6} sm={6} xs={12} className="flex px-2 py-2">
-              <Card variant="bordered" className="flex md:flex-row p-6 gap-3">
-                <Grid className="sm:text-center flex sm:justify-center justify-center place-items-center border">
+            <Grid md={6} sm={6} xs={12} className="flex px-6 py-4">
+              <Card variant="bordered" className="border-0 shadow-xl  flex md:flex-row p-6 gap-8">
+                <div className="flex justify-center">
+                <Grid
+                  style={{ minWidth: "100px", maxWidth: "100px" }}
+                  className="flex place-items-center"
+                >
                   <Image
                     src={"/features/time.png"}
                     alt="data-management"
-                    width={160}
-                    height={160}
+                    width={260}
+                    height={260}
                   ></Image>
                 </Grid>
-                <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col border">
-                  <Text h4 b css={{ lineHeight: "$normal", mb:"10px" }}>
-                  Time Saving time saving
+                </div>
+                <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col">
+                  <Text h4 b css={{ lineHeight: "$normal", mb: "10px" }}>
+                    Time Saving
                   </Text>
-                  <Text css={{ lineHeight: "$normal", textAlign:"justify" }}>
-                  Stock checking and verification of books in the library can be done within a few hours. The automated system saves a considerable amount of time as opposed to the manual system.
+                  <Text css={{ lineHeight: "$normal", textAlign: "justify", letterSpacing: "0.1px" }}>
+                    Stock checking and verification of books in the library can
+                    be done within a few hours. The automated system saves a
+                    considerable amount of time as opposed to the manual system.
                   </Text>
                 </Grid>
               </Card>
             </Grid>
-
-
-    
-
-
-
-
-
-
+            <Grid md={6} sm={6} xs={12} className="flex px-6 py-4">
+              <Card variant="bordered" className="border-0 shadow-xl  flex md:flex-row p-6 gap-8">
+                <div className="flex justify-center">
+                <Grid
+                  style={{ minWidth: "100px", maxWidth: "100px" }}
+                  className="flex place-items-center"
+                >
+                  <Image
+                    src={"/features/searching.png"}
+                    alt="data-management"
+                    width={260}
+                    height={260}
+                  ></Image>
+                </Grid>
+                </div>
+                <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col">
+                  <Text h4 b css={{ lineHeight: "$normal", mb: "10px" }}>
+                    Easily Tracking or Searching
+                  </Text>
+                  <Text css={{ lineHeight: "$normal", textAlign: "justify", letterSpacing: "0.1px", }}>
+                    Searching books name, students info, etc. is very easy to use by just typing the details. 
+                    The search functions can be filtered to the need of each user.
+                  </Text>
+                </Grid>
+              </Card>
+            </Grid>
+            <Grid md={6} sm={6} xs={12} className="flex px-6 py-4">
+              <Card variant="bordered" className="border-0 shadow-xl  flex md:flex-row p-6 gap-8">
+                <div className="flex justify-center">
+                <Grid
+                  style={{ minWidth: "100px", maxWidth: "100px" }}
+                  className="flex place-items-center"
+                >
+                  <Image
+                    src={"/features/manual.png"}
+                    alt="data-management"
+                    width={260}
+                    height={260}
+                  ></Image>
+                </Grid>
+                </div>
+                <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col">
+                  <Text h4 b css={{ lineHeight: "$normal", mb: "10px" }}>
+                  Reduce Manual Work
+                  </Text>
+                  <Text css={{ lineHeight: "$normal", textAlign: "justify", letterSpacing: "0.1px", }}>
+                  Maintaining daily reports of books issued, renewed and returned, misplaced and lost manually is a tiring process. This system eliminates the need for manual entries, minimizes errors, increases accuracy and efficiency of operations.
+                  </Text>
+                </Grid>
+              </Card>
+            </Grid>
           </Grid.Container>
         </div>
       </div>
