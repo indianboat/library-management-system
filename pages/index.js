@@ -1,13 +1,33 @@
 import Head from "next/head";
 import Image from "next/legacy/image";
 import { Button, Grid, Link, Text, Card, Container } from "@nextui-org/react";
+import HomeImage from '../public/home_image.jpg';
+import dataManagementImage from '../public/features/data-management.png';
+import timeImage from '../public/features/time.png';
+import searchingImage from '../public/features/searching.png';
+import manualImage from '../public/features/manual.png';
+
+const shimmer = (w, h) => `
+<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="g">
+      <stop stop-color="#f0f0f0" offset="20%" />
+      <stop stop-color="#f0f0f0" offset="50%" />
+      <stop stop-color="#f0f0f0" offset="70%" />
+    </linearGradient>
+  </defs>
+  <rect width="${w}" height="${h}" fill="#f0f0f0" />
+  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
+  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+</svg>`
+
+const toBase64 = (str) =>
+  typeof window === 'undefined'
+    ? Buffer.from(str).toString('base64')
+    : window.btoa(str)
 
 export default function Home() {
-  // const myLoader = ({ src, width, quality }) => {
-  //   return `https://example.com/${src}?w=${width}&q=${quality || 75}`
-  // }
-
-  return (
+ return (
     <>
       <Head>
         <title>Library Management System | LMS</title>
@@ -20,10 +40,6 @@ export default function Home() {
         <Grid.Container>
           <Grid xs={12} md={6}>
             <div className="px-4 py-4 md:text-start sm:text-center text-center">
-              {/* <div className="text-6xl font-bold md:text-start sm:text-center" style={{ lineHeight: "4.5rem" }}>
-                Manage Your <br /> <i>Library</i> <br /> at one place
-              </div> */}
-
               <Text
                 h1
                 size={60}
@@ -72,7 +88,6 @@ export default function Home() {
                 Library management focuses on the possibility of search for
                 books by title, author or subject by the member.
               </p>
-              {/* <Button color="secondary" css={{backgroundColor:"$blue900 !important"}}>Get Started</Button> */}
               <Link
                 css={{
                   color: "$blue100",
@@ -87,8 +102,8 @@ export default function Home() {
             </div>
           </Grid>
           <Grid xs={12} md={6} className="flex justify-center">
-            <div className="px-3 py-3 flex">
-              <Image src={"/home_image.jpg"} width={600} height={300} />
+            <div className="px-3 py-3 flex place-items-center">
+              <Image src={HomeImage} width={600} height={300} alt="home-image" role="img" placeholder="blur" blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(600, 300))}`}/>
             </div>
           </Grid>
         </Grid.Container>
@@ -103,22 +118,25 @@ export default function Home() {
         <div className="">
           <Grid.Container className="mx-auto">
             <Grid md={6} sm={6} xs={12} className="flex px-6 py-4">
-              <Card variant="bordered" className="border-0 shadow-xl  flex md:flex-row p-6 gap-6">
+              <Card variant="bordered" className="border-0 shadow-lg flex md:flex-row p-6 gap-6">
                 <div className="flex justify-center">
                   <Grid
                     style={{ minWidth: "100px", maxWidth: "100px" }}
                     className="flex place-items-center"
                   >
                     <Image
-                      src={"/features/data-management.png"}
+                      src={dataManagementImage}
                       alt="data-management"
                       width={260}
                       height={260}
+                      role="img"
+                      placeholder="blur" 
+                      blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(260, 260))}`}
                     ></Image>
                   </Grid>
                 </div>
                 <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col">
-                  <Text h4 b css={{ lineHeight: "$normal", mb: "10px" }}>
+                  <Text b css={{ lineHeight: "$normal", mb: "10px" }}>
                     Easy to Manage Books
                   </Text>
                   <Text css={{ lineHeight: "$normal", textAlign: "justify", letterSpacing: "0.1px", }}>
@@ -131,22 +149,25 @@ export default function Home() {
             </Grid>
 
             <Grid md={6} sm={6} xs={12} className="flex px-6 py-4">
-              <Card variant="bordered" className="border-0 shadow-xl  flex md:flex-row p-6 gap-8">
+              <Card variant="bordered" className="border-0 shadow-lg flex md:flex-row p-6 gap-8">
                 <div className="flex justify-center">
                 <Grid
                   style={{ minWidth: "100px", maxWidth: "100px" }}
                   className="flex place-items-center"
                 >
                   <Image
-                    src={"/features/time.png"}
-                    alt="data-management"
+                    src={timeImage}
+                    alt="time"
                     width={260}
                     height={260}
+                    role="img"
+                    placeholder="blur" 
+                    blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(260, 260))}`}
                   ></Image>
                 </Grid>
                 </div>
                 <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col">
-                  <Text h4 b css={{ lineHeight: "$normal", mb: "10px" }}>
+                  <Text b css={{ lineHeight: "$normal", mb: "10px" }}>
                     Time Saving
                   </Text>
                   <Text css={{ lineHeight: "$normal", textAlign: "justify", letterSpacing: "0.1px" }}>
@@ -158,22 +179,25 @@ export default function Home() {
               </Card>
             </Grid>
             <Grid md={6} sm={6} xs={12} className="flex px-6 py-4">
-              <Card variant="bordered" className="border-0 shadow-xl  flex md:flex-row p-6 gap-8">
+              <Card variant="bordered" className="border-0 shadow-lg flex md:flex-row p-6 gap-8">
                 <div className="flex justify-center">
                 <Grid
                   style={{ minWidth: "100px", maxWidth: "100px" }}
                   className="flex place-items-center"
                 >
                   <Image
-                    src={"/features/searching.png"}
-                    alt="data-management"
+                    src={searchingImage}
+                    alt="searching"
                     width={260}
                     height={260}
+                    role="img"
+                    placeholder="blur" 
+                    blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(260, 260))}`}
                   ></Image>
                 </Grid>
                 </div>
                 <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col">
-                  <Text h4 b css={{ lineHeight: "$normal", mb: "10px" }}>
+                  <Text b css={{ lineHeight: "$normal", mb: "10px" }}>
                     Easily Tracking or Searching
                   </Text>
                   <Text css={{ lineHeight: "$normal", textAlign: "justify", letterSpacing: "0.1px", }}>
@@ -184,22 +208,25 @@ export default function Home() {
               </Card>
             </Grid>
             <Grid md={6} sm={6} xs={12} className="flex px-6 py-4">
-              <Card variant="bordered" className="border-0 shadow-xl  flex md:flex-row p-6 gap-8">
+              <Card variant="bordered" className="border-0 shadow-lg flex md:flex-row p-6 gap-8">
                 <div className="flex justify-center">
                 <Grid
                   style={{ minWidth: "100px", maxWidth: "100px" }}
                   className="flex place-items-center"
                 >
                   <Image
-                    src={"/features/manual.png"}
-                    alt="data-management"
+                    src={manualImage}
+                    alt="manual"
                     width={260}
                     height={260}
+                    role="img"
+                    placeholder="blur" 
+                    blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(260, 260))}`}
                   ></Image>
                 </Grid>
                 </div>
                 <Grid className="md:text-start sm:text-center text-center md:py-0 sm:py-2 flex flex-col">
-                  <Text h4 b css={{ lineHeight: "$normal", mb: "10px" }}>
+                  <Text b css={{ lineHeight: "$normal", mb: "10px" }}>
                   Reduce Manual Work
                   </Text>
                   <Text css={{ lineHeight: "$normal", textAlign: "justify", letterSpacing: "0.1px", }}>
