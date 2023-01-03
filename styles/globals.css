@@ -126,3 +126,42 @@ a {
     color-scheme: dark;
   }
 } */
+
+@layer base {
+  @font-face {
+    font-family: "Inter";
+    src: url(/fonts/Inter.ttf) format("truetype");
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "GilroyExtraBold";
+    src: url(/fonts/GilroyExtraBold.otf) format("opentype");
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "GilroyLight";
+    src: url(/fonts/GilroyLight.otf) format("opentype");
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "WigglyCurvesRegular";
+    src: url(/fonts/WigglyCurvesRegular.ttf) format("truetype");
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "BoncheLight";
+    src: url(/fonts/Bonche-Light.otf) format("opentype");
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "EdensorFree";
+    src: url(/fonts/Edensor-Free.otf) format("opentype");
+    font-style: normal;
+    font-display: block;
+  }
+}
