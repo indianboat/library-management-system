@@ -55,10 +55,9 @@ const SignUp = () => {
                     className=""
                     size="lg"
                     type="text"
-                    underlined
                     placeholder="First Name*"
-                    status="primary"
-                    color="primary"
+                    // status="primary"
+                    // color="primary"
                     // helperColor={helper.color}
                     // helperText={helper.text}
                     required
@@ -67,21 +66,18 @@ const SignUp = () => {
                     className=""
                     size="lg"
                     type="text"
-                    underlined
                     placeholder="Last Name"
                   />
                 </div>
                 <Input
                   type="email"
                   size="lg"
-                  underlined
                   placeholder="Email address"
                   required
                 />
                 <Input.Password
                   size="lg"
                   type="password"
-                  underlined
                   placeholder="Create Password"
                   required
                 />
