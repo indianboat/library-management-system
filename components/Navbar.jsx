@@ -6,7 +6,7 @@ const NavbarBody = () => {
   return (
     <>
       <Navbar shouldHideOnScroll variant="sticky">
-        <Navbar.Toggle showIn="xs" />
+        <Navbar.Toggle showIn="xs" name="toggleButton" />
         <Navbar.Brand css={{ "@xs": { w: "12%" } }}>
           <Text b color="inherit" hideIn="xs">
             Library Manager
@@ -21,11 +21,10 @@ const NavbarBody = () => {
           <NextLink className="mx-4" href="/">Home</NextLink>
           <NextLink className="mx-4" href="/#features">Features</NextLink>
           <NextLink className="mx-4" href="#">Login</NextLink>
-
         </Navbar.Content>
 
         <Navbar.Content>
-          <NextLink className="font-Inter" color="inherit" href="/signup">
+          <NextLink className="font-Inter" color="inherit" href="/signup" role="tab">
             Sign up
           </NextLink>
         </Navbar.Content>

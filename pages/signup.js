@@ -25,11 +25,10 @@ const toBase64 = (str) =>
 const SignUp = () => {
   return (
     <>
-      <div className="container border border-red-500 mx-auto md:my-12 sm:my-6 my-6 px-3">
+      <div className="container mx-auto md:my-12 sm:my-6 my-6 px-3">
         <div className="flex md:grid-cols-2 sm:grid-cols-1 justify-evenly">
-          <div className="border flex-col md:flex sm:hidden hidden place-items-center justify-center border-blue-500 my-3">
+          <div className="flex-col md:flex sm:hidden hidden place-items-center justify-center my-3">
             <Image
-              className="border"
               src="/signupImage.png"
               role="img"
               alt="signup-image"
@@ -41,44 +40,46 @@ const SignUp = () => {
               )}`}
             />
           </div>
-          <div className="md:py-12 flex flex-col border border-blue-500 bg-white rounded-lg drop-shadow-md my-3">
+          <div className="md:py-12 flex flex-col rounded-lg my-3">
             <Text size={24} className="font-Calisga text-center mb-10">
               Sign up as Librarian
             </Text>
             <div className="">
               <form
                 method="post"
-                className="border py-3 px-8 flex flex-col gap-y-6"
+                className="py-3 px-8 flex flex-col gap-y-6"
               >
-                <div className="grid gap-y-6 gap-x-6 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 border">
+                <div className="grid gap-y-6 gap-x-6 md:grid-cols-2 sm:grid-cols-2 grid-cols-1">
                   <Input
-                    className=""
-                    size="lg"
+                    size="md"
+                    shadow={false}
                     type="text"
                     placeholder="First Name*"
-                    // status="primary"
-                    // color="primary"
-                    // helperColor={helper.color}
-                    // helperText={helper.text}
+                    aria-label="first-name"
                     required
                   />
                   <Input
-                    className=""
-                    size="lg"
+                    size="md"
+                    shadow={false}
                     type="text"
                     placeholder="Last Name"
+                    aria-label="last-name"
                   />
                 </div>
                 <Input
                   type="email"
-                  size="lg"
+                  size="md"
+                  shadow={false}
                   placeholder="Email address"
+                  aria-label="email"
                   required
                 />
                 <Input.Password
-                  size="lg"
+                  size="md"
+                  shadow={false}
                   type="password"
                   placeholder="Create Password"
+                  aria-label="password"
                   required
                 />
                 <Button
@@ -90,7 +91,7 @@ const SignUp = () => {
                 </Button>
               </form>
             </div>
-            <Text className="font-Inter text-center border mt-4">
+            <Text className="font-Inter text-center mt-4">
               Already have an account? <NextLink href="/login">Login</NextLink>
             </Text>
           </div>

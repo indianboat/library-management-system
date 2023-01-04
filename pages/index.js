@@ -111,7 +111,7 @@ export default function Home() {
                 width={600}
                 height={300}
                 alt="home-image"
-                role="img"
+                role="home-image"
                 placeholder="blur"
                 blurDataURL={`data:image/svg+xml;base64,${toBase64(
                   shimmer(600, 300)
@@ -145,7 +145,7 @@ export default function Home() {
                       alt="data-management"
                       width={260}
                       height={260}
-                      role="img"
+                      role="data-manage"
                       placeholder="blur"
                       blurDataURL={`data:image/svg+xml;base64,${toBase64(
                         shimmer(260, 260)
@@ -188,7 +188,7 @@ export default function Home() {
                       alt="time"
                       width={260}
                       height={260}
-                      role="img"
+                      role="time-manage"
                       placeholder="blur"
                       blurDataURL={`data:image/svg+xml;base64,${toBase64(
                         shimmer(260, 260)
@@ -230,7 +230,7 @@ export default function Home() {
                       alt="searching"
                       width={260}
                       height={260}
-                      role="img"
+                      role="search"
                       placeholder="blur"
                       blurDataURL={`data:image/svg+xml;base64,${toBase64(
                         shimmer(260, 260)
