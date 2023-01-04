@@ -1,10 +1,11 @@
 import React from "react";
-import { Navbar, Link, Text } from "@nextui-org/react";
+import { Navbar, Text } from "@nextui-org/react";
+import NextLink from 'next/link';
 
 const NavbarBody = () => {
   return (
     <>
-      <Navbar variant="sticky">
+      <Navbar shouldHideOnScroll variant="sticky">
         <Navbar.Toggle showIn="xs" />
         <Navbar.Brand css={{ "@xs": { w: "12%" } }}>
           <Text b color="inherit" hideIn="xs">
@@ -17,31 +18,32 @@ const NavbarBody = () => {
           variant="highlight-rounded"
           className="font-Inter"
         >
-          <Navbar.Link href="#">Home</Navbar.Link>
-          <Navbar.Link href="#features">Features</Navbar.Link>
-          <Navbar.Link href="#">Login</Navbar.Link>
+          <NextLink className="mx-4" href="/">Home</NextLink>
+          <NextLink className="mx-4" href="/#features">Features</NextLink>
+          <NextLink className="mx-4" href="#">Login</NextLink>
+
         </Navbar.Content>
 
         <Navbar.Content>
-          <Navbar.Link className="font-Inter" color="inherit" href="#">
+          <NextLink className="font-Inter" color="inherit" href="/signup">
             Sign up
-          </Navbar.Link>
+          </NextLink>
         </Navbar.Content>
         <Navbar.Collapse>
           <Navbar.CollapseItem key={"home"}>
-            <Link color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="#">
+            <NextLink color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="/">
               Home
-            </Link>
+            </NextLink>
           </Navbar.CollapseItem>
           <Navbar.CollapseItem key={"feature"}>
-            <Link color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="#features">
+            <NextLink color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="/#features">
               Features
-            </Link>
+            </NextLink>
           </Navbar.CollapseItem>
           <Navbar.CollapseItem key={"login"}>
-            <Link color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="#">
+            <NextLink color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="#">
               Login
-            </Link>
+            </NextLink>
           </Navbar.CollapseItem>
         </Navbar.Collapse>
       </Navbar>

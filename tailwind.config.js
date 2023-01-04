@@ -13,8 +13,9 @@ module.exports = {
         GilroyExtraBold:["GilroyExtraBold"],
         WigglyCurvesRegular:["WigglyCurvesRegular"],
         BoncheLight:["BoncheLight"],
-        EdensorFree:["EdensorFree"]
-
+        EdensorFree:["EdensorFree"],
+        SimpleDaily:["SimpleDaily"],
+        Calisga:["Calisga"]
       }
     },
   },

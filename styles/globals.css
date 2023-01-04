@@ -164,4 +164,16 @@ a {
     font-style: normal;
     font-display: block;
   }
+  @font-face {
+    font-family: "SimpleDaily";
+    src: url(/fonts/SimpleDaily.ttf) format("truetype");
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Calisga";
+    src: url(/fonts/Calisga.ttf) format("truetype");
+    font-style: normal;
+    font-display: block;
+  }
 }
