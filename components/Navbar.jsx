@@ -20,12 +20,12 @@ const NavbarBody = () => {
         >
           <NextLink className="mx-4" href="/">Home</NextLink>
           <NextLink className="mx-4" href="/#features">Features</NextLink>
-          <NextLink className="mx-4" href="/login">Login</NextLink>
+          <NextLink className="mx-4" href="/signup">Sign up</NextLink>
         </Navbar.Content>
 
         <Navbar.Content>
-          <NextLink className="font-Inter" color="inherit" href="/signup" role="tab">
-            Sign up
+          <NextLink className="font-Inter" color="inherit" href="/login" role="tab">
+            Login
           </NextLink>
         </Navbar.Content>
         <Navbar.Collapse>
