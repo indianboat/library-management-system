@@ -7,12 +7,17 @@ html,
 body {
   scroll-behavior: smooth;
   height: 100%;
+
 } 
 
 .layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-image: url('/backgrouds/background2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .footer {

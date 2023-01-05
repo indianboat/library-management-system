@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/legacy/image";
 import { Text, Input, Button } from "@nextui-org/react";
 import NextLink from "next/link";
+import Router from "next/router";
 
 const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -23,6 +24,52 @@ const toBase64 = (str) =>
     : window.btoa(str);
 
 const SignUp = () => {
+  const [userData, setUserData] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    password: "",
+  });
+
+  const getUserData = (event) => {
+    setUserData({ ...userData, [event.target.name]: event.target.value });
+  };
+
+  const saveData = async () => {
+    const { fname, lname, email, password } = userData;
+
+    try {
+      const res = await fetch("/api/signup", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ fname, lname, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.message == "Required first name !") {
+        alert("Required first name !");
+      } else if (data.message == "Required email !") {
+        alert("Required email !");
+      } else if (data.message == "Required password !") {
+        alert("Required password !");
+      } else if (data.message == "Email id invalid !") {
+        alert("Email id invalid !");
+      } else if (data.message == "User already exists !") {
+        alert("User already exists !");
+      } else if (data.message == "Sign up Success") {
+        alert("Sign up Success");
+      } else if (data.message == "Server Error, try again later") {
+        alert("Server Error, try again later");
+      } else {
+        alert("Server Error");
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
   return (
     <>
       <div className="container mx-auto md:my-12 sm:my-6 my-6 px-3">
@@ -36,7 +83,7 @@ const SignUp = () => {
               height={400}
               placeholder="blur"
               blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                shimmer(600, 400)
+                shimmer(500, 400)
               )}`}
             />
           </div>
@@ -45,46 +92,55 @@ const SignUp = () => {
               Sign up as Librarian
             </Text>
             <div className="">
-              <form
-                method="post"
-                className="py-3 px-8 flex flex-col gap-y-6"
-              >
+              <form method="post" className="py-3 px-8 flex flex-col gap-y-6">
                 <div className="grid gap-y-6 gap-x-6 md:grid-cols-2 sm:grid-cols-2 grid-cols-1">
                   <Input
                     size="md"
                     shadow={false}
                     type="text"
+                    name="fname"
+                    value={userData.fname}
+                    onChange={getUserData}
                     placeholder="First Name*"
                     aria-label="first-name"
-                    required
+                    spellCheck={false}
                   />
                   <Input
                     size="md"
                     shadow={false}
                     type="text"
+                    name="lname"
+                    value={userData.lname}
+                    onChange={getUserData}
                     placeholder="Last Name"
                     aria-label="last-name"
+                    spellCheck={false}
                   />
                 </div>
                 <Input
                   type="email"
+                  name="email"
+                  value={userData.email}
+                  onChange={getUserData}
                   size="md"
                   shadow={false}
                   placeholder="Email address"
                   aria-label="email"
-                  required
+                  spellCheck={false}
                 />
                 <Input.Password
                   size="md"
                   shadow={false}
                   type="password"
+                  name="password"
+                  value={userData.password}
+                  onChange={getUserData}
                   placeholder="Create Password"
                   aria-label="password"
-                  required
                 />
                 <Button
-                  type="submit"
                   className="mt-4"
+                  onClick={saveData}
                   css={{ backgroundColor: "$accents9 !important" }}
                 >
                   Sign up

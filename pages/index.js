@@ -1,12 +1,10 @@
-
 import Image from "next/legacy/image";
 import { Grid, Link, Text, Card } from "@nextui-org/react";
-import HomeImage from "../public/home_image.jpg";
+import HomeImage from "../public/home_image.png";
 import dataManagementImage from "../public/features/data-management.png";
 import timeImage from "../public/features/time.png";
 import searchingImage from "../public/features/searching.png";
 import manualImage from "../public/features/manual.png";
-
 
 const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -35,13 +33,12 @@ export default function Home() {
           <Grid xs={12} md={6}>
             <div className="px-4 py-4 md:text-start sm:text-center text-center">
               <Text
-                
                 size={60}
                 css={{
                   textGradient: "45deg, #0093E9 -20%, #80D0C7 50%",
                   lineHeight: "4.5rem",
-                  letterSpacing:"0.1px",
-                  padding:"1px 0px"
+                  letterSpacing: "0.1px",
+                  padding: "1px 0px",
                 }}
                 weight="bold"
                 className="font-EdensorFree"
@@ -49,14 +46,13 @@ export default function Home() {
                 Manage Your
               </Text>
               <Text
-                
                 size={60}
                 css={{
                   textGradient: "45deg, #0093E9 -20%, #80D0C7 50%",
                   lineHeight: "4.5rem",
                   fontStyle: "italic",
-                  letterSpacing:"0.1px",
-                  padding:"1px 0px"
+                  letterSpacing: "0.1px",
+                  padding: "1px 0px",
                 }}
                 weight="bold"
                 className="font-GilroyExtraBold"
@@ -64,13 +60,12 @@ export default function Home() {
                 Library
               </Text>
               <Text
-                
                 size={60}
                 css={{
                   textGradient: "45deg, #0093E9 -20%, #80D0C7 50%",
                   lineHeight: "4.5rem",
-                  letterSpacing:"0.1px",
-                  padding:"1px 0px"
+                  letterSpacing: "0.1px",
+                  padding: "1px 0px",
                 }}
                 weight="bold"
                 className="font-GilroyExtraBold"
