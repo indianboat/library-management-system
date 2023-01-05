@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/legacy/image";
-import { Text, Input, Button } from "@nextui-org/react";
+import { Text, Input, Button, Loading } from "@nextui-org/react";
 import NextLink from "next/link";
 import Router from "next/router";
 
@@ -35,8 +35,12 @@ const SignUp = () => {
     setUserData({ ...userData, [event.target.name]: event.target.value });
   };
 
+  const [loading, setLoading] = useState(false);
+
   const saveData = async () => {
     const { fname, lname, email, password } = userData;
+
+    setLoading(true);
 
     try {
       const res = await fetch("/api/signup", {
@@ -51,23 +55,32 @@ const SignUp = () => {
 
       if (data.message == "Required first name !") {
         alert("Required first name !");
+        setLoading(false);
       } else if (data.message == "Required email !") {
         alert("Required email !");
+        setLoading(false);
       } else if (data.message == "Required password !") {
         alert("Required password !");
+        setLoading(false);
       } else if (data.message == "Email id invalid !") {
         alert("Email id invalid !");
+        setLoading(false);
       } else if (data.message == "User already exists !") {
         alert("User already exists !");
+        setLoading(false);
       } else if (data.message == "Sign up Success") {
         alert("Sign up Success");
+        setLoading(false);
       } else if (data.message == "Server Error, try again later") {
         alert("Server Error, try again later");
+        setLoading(false);
       } else {
         alert("Server Error");
+        setLoading(false);
       }
     } catch (error) {
       alert(error);
+      setLoading(false);
     }
   };
   return (
@@ -143,7 +156,9 @@ const SignUp = () => {
                   onClick={saveData}
                   css={{ backgroundColor: "$accents9 !important" }}
                 >
-                  Sign up
+                  {
+                    loading ? <> <Loading color="white" size="sm" /> </> : "Sign up"
+                  }
                 </Button>
               </form>
             </div>
