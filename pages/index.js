@@ -1,5 +1,6 @@
 import Image from "next/legacy/image";
-import { Grid, Link, Text, Card } from "@nextui-org/react";
+import { Grid, Text, Card } from "@nextui-org/react";
+import NextLink from 'next/link';
 import HomeImage from "../public/home_image.png";
 import dataManagementImage from "../public/features/data-management.png";
 import timeImage from "../public/features/time.png";
@@ -74,7 +75,7 @@ export default function Home() {
               </Text>
 
               <p
-                className="md:mt-4 sm:mt-4 mt-6 font-Inter"
+                className="md:my-6 sm:my-6 my-8 font-Inter"
                 style={{
                   lineHeight: "2rem",
                   letterSpacing: "0.1px",
@@ -86,17 +87,17 @@ export default function Home() {
                 Library management focuses on the possibility of search for
                 books by title, author or subject by the member.
               </p>
-              <Link
-                css={{
-                  color: "$blue100",
-                  backgroundColor: "$blue900",
-                  borderRadius: "$3xl",
+              <NextLink
+                style={{
+                  color: "white",
+                  backgroundColor: "#102C4C",
+                  borderRadius: "50px",
                 }}
-                className="px-6 py-1 mt-6"
-                href="#"
+                className="px-6 py-2"
+                href="/signup"
               >
                 Get Started
-              </Link>
+              </NextLink>
             </div>
           </Grid>
           <Grid xs={12} md={6} className="flex justify-center">
