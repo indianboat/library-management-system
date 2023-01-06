@@ -3,6 +3,9 @@ import Image from "next/legacy/image";
 import { Text, Input, Button, Loading } from "@nextui-org/react";
 import NextLink from "next/link";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
@@ -53,37 +56,38 @@ const SignUp = () => {
       const data = await res.json();
 
       if (data.message == "Required first name !") {
-        alert("Required first name !");
+        toast.error("Required first name !");
         setLoading(false);
       } else if (data.message == "Required email !") {
-        alert("Required email !");
+        toast.error("Required email !");
         setLoading(false);
       } else if (data.message == "Required password !") {
-        alert("Required password !");
+        toast.error("Required password !");
         setLoading(false);
       } else if (data.message == "Email id invalid !") {
-        alert("Email id invalid !");
+        toast.error("Email id invalid !");
         setLoading(false);
       } else if (data.message == "User already exists !") {
-        alert("User already exists !");
+        toast.error("User already exists !");
         setLoading(false);
       } else if (data.message == "Sign up Success") {
-        alert("Sign up Success");
+        toast.success("Sign up Success");
         setLoading(false);
       } else if (data.message == "Server Error, try again later") {
-        alert("Server Error, try again later");
+        toast.error("Server Error, try again later");
         setLoading(false);
       } else {
-        alert("Server Error");
+        toast.error("Server Error");
         setLoading(false);
       }
     } catch (error) {
-      alert(error);
+      toast.error(error);
       setLoading(false);
     }
   };
   return (
     <>
+        <ToastContainer position="top-center" hideProgressBar={true} autoClose={4000} theme={"light"} />
       <div className="container mx-auto md:my-12 sm:my-6 my-6 px-3">
         <div className="flex md:grid-cols-2 sm:grid-cols-1 justify-evenly">
           <div className="flex-col md:flex sm:hidden hidden place-items-center justify-center my-3">

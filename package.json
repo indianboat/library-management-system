@@ -18,8 +18,10 @@
     "mongoose": "^6.8.1",
     "next": "13.1.1",
     "nextjs-progressbar": "^0.0.16",
+    "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-toastify": "^9.1.1",
     "validator": "^13.7.0"
   },
   "devDependencies": {

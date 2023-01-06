@@ -1,8 +1,26 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Navbar, Text } from "@nextui-org/react";
+import { Navbar, Button } from "@nextui-org/react";
 import NextLink from 'next/link';
+import { parseCookies, destroyCookie } from "nookies";
+import { useRouter } from "next/router";
+
+
 
 const NavbarBody = () => {
+
+  const {user_session} = parseCookies();
+
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const router = useRouter();
+
+  useEffect(()=>{
+    if(user_session){
+      setIsUserLoggedIn(true);
+    }
+    else{
+      setIsUserLoggedIn(false)
+    }
+  },[user_session]);
 
 	const navbarToggleRef = useRef();
 	const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -18,31 +36,58 @@ const NavbarBody = () => {
 		isSideMenuOpen && navbarToggleRef.current.click()
 	}
 
+  const logoutUser = () => {
+    destroyCookie(null, "user_session");
+    router.push("/");
+  }
+
   return (
     <>
       <Navbar variant="sticky">
         <Navbar.Toggle ref={navbarToggleRef} onChange={(isSelected) => setIsSideMenuOpen(isSelected)} showIn="xs" name="toggleButton" />
         <Navbar.Brand onClick={() => HandleSideMenu("/")} css={{ "@xs": { w: "12%" } }}>
-          <NextLink className="font-semibold" color="inherit" href={"/"}>
+          {
+            isUserLoggedIn==false ? <><NextLink className="font-semibold" color="inherit" href={"/"}>
             Library Manager
-          </NextLink>
+          </NextLink></> : <><NextLink className="font-semibold" color="inherit" href={"/dashboard"}>
+            Library Manager
+          </NextLink></>
+          }
         </Navbar.Brand>
-        <Navbar.Content
-          activeColor="default"
-          hideIn="xs"
-          className="font-Inter"
-        >
+        <Navbar.Content activeColor="default" hideIn="xs" className="font-Inter" >
+        {
+          isUserLoggedIn==false ? 
+          (<>
           <NextLink className="mx-4" href="/">Home</NextLink>
           <NextLink className="mx-4" href="/#features">Features</NextLink>
           <NextLink className="mx-4" href="/signup">Sign up</NextLink>
+          </>) 
+          : 
+          (<>
+          <NextLink className="mx-4" href="/dashboard">Home</NextLink>
+          </>)
+        }
         </Navbar.Content>
 
         <Navbar.Content>
-          <NextLink className="font-Inter" color="inherit" href="/login" role="tab">
-            Login
-          </NextLink>
+        {
+          isUserLoggedIn==false ?
+          (<>
+            <NextLink className="font-Inter" color="inherit" href="/login" role="tab">
+              Login
+            </NextLink>
+          </>) :
+          (<>
+            <Button className="font-Inter bg-black" auto onClick={() => logoutUser(onsubmit)} href="/login" role="tab">
+            Logout
+          </Button>
+          </>)
+        }
         </Navbar.Content>
-        <Navbar.Collapse>
+        {
+          isUserLoggedIn==false ? 
+          (<>
+          <Navbar.Collapse>
           <Navbar.CollapseItem key={"home"}>
             <NextLink onClick={() => HandleSideMenu("/")} color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="/">
               Home
@@ -53,12 +98,28 @@ const NavbarBody = () => {
               Features
             </NextLink>
           </Navbar.CollapseItem>
-          <Navbar.CollapseItem key={"login"}>
-            <NextLink onClick={() => HandleSideMenu("/login")} color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="/login">
-              Login
+          <Navbar.CollapseItem key={"signup"}>
+            <NextLink onClick={() => HandleSideMenu("/signup")} color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="/signup">
+              Sign up
             </NextLink>
           </Navbar.CollapseItem>
         </Navbar.Collapse>
+          </>) : 
+          (<>
+          <Navbar.Collapse>
+          <Navbar.CollapseItem key={"home"}>
+            <NextLink onClick={() => HandleSideMenu("/")} color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="/dashboard">
+              Home
+            </NextLink>
+          </Navbar.CollapseItem>
+          <Navbar.CollapseItem key={"home"}>
+            <NextLink onClick={() => HandleSideMenu("/")} color="inherit" css={{ minWidth: "100%", fontWeight:"500 !important" }} href="/dashboard#">
+              Add School/University
+            </NextLink>
+          </Navbar.CollapseItem>
+        </Navbar.Collapse>
+          </>)
+        }
       </Navbar>
     </>
   );

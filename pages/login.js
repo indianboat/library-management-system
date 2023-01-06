@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import Image from "next/legacy/image";
 import { Text, Input, Button, Loading } from "@nextui-org/react";
 import NextLink from "next/link";
+import { setCookie, parseCookies } from 'nookies';
+import { useRouter } from "next/router";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const shimmer = (w, h) => `
@@ -34,6 +39,7 @@ const Login = () => {
   };
 
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const saveData = async () => {
     const { email, password } = userLoginData;
@@ -52,38 +58,44 @@ const Login = () => {
       const data = await res.json();
 
       if (data.message == "Required email !") {
-        alert("Required email !");
+        toast.error("Required email !");
         setLoading(false);
       } else if (data.message == "Required password !") {
-        alert("Required password !");
+        toast.error("Required password !");
         setLoading(false);
       } else if (data.message == "Required password !") {
-        alert("Required password !");
+        toast.error("Required password !");
         setLoading(false);
       } else if (data.message == "Email id invalid !") {
-        alert("Email id invalid !");
+        toast.error("Email id invalid !");
         setLoading(false);
       } else if (data.message == "This email is not registered with us !") {
-        alert("This email is not registered with us !");
+        toast.error("This email is not registered with us !");
         setLoading(false);
       } else if (data.message == "Invalid Credentials") {
-        alert("Invalid Credentials");
+        toast.error("Invalid Credentials");
         setLoading(false);
       } else if (data.message == "Login success") {
-        alert("Login success");
+        toast.success("Login Success !");
+        setCookie(null, "user_session", data.token, { secure: true })
         setLoading(false);
-        console.log(data.token);
+
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 3000);
+
       } else {
-        alert("Server Error");
+        toast.error("Server Error");
         setLoading(false);
       }
     } catch (error) {
-      alert(error);
+      toast.error(error);
       setLoading(false);
     }
   };
   return (
     <>
+    <ToastContainer position="top-center" hideProgressBar={true} autoClose={4000} theme={"light"} />
       <div className="container mx-auto md:my-12 sm:my-6 my-6 px-3">
         <div className="flex md:grid-cols-2 sm:grid-cols-1 justify-evenly">
           <div className="flex-col md:flex sm:hidden hidden place-items-center justify-center my-3">
@@ -129,7 +141,6 @@ const Login = () => {
                 <Button
                   className="mt-4"
                   onClick={saveData}
-                  disabled
                   css={{ backgroundColor: "$accents9 !important" }}
                 >
                   {
