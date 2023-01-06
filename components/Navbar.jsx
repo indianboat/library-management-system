@@ -23,7 +23,7 @@ const NavbarBody = () => {
       <Navbar variant="sticky">
         <Navbar.Toggle ref={navbarToggleRef} onChange={(isSelected) => setIsSideMenuOpen(isSelected)} showIn="xs" name="toggleButton" />
         <Navbar.Brand onClick={() => HandleSideMenu("/")} css={{ "@xs": { w: "12%" } }}>
-          <NextLink className="font-semibold" color="inherit" href={"/"} hideIn="xs">
+          <NextLink className="font-semibold" color="inherit" href={"/"}>
             Library Manager
           </NextLink>
         </Navbar.Brand>

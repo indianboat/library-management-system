@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Image from "next/legacy/image";
 import { Text, Input, Button, Loading } from "@nextui-org/react";
 import NextLink from "next/link";
-import Router from "next/router";
 
 const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

@@ -24,21 +24,19 @@ const toBase64 = (str) =>
     : window.btoa(str);
 
 const Login = () => {
-  const [userData, setUserData] = useState({
-    fname: "",
-    lname: "",
+  const [userLoginData, setUserLoginData] = useState({
     email: "",
     password: "",
   });
 
   const getUserData = (event) => {
-    setUserData({ ...userData, [event.target.name]: event.target.value });
+    setUserLoginData({ ...userLoginData, [event.target.name]: event.target.value });
   };
 
   const [loading, setLoading] = useState(false);
 
   const saveData = async () => {
-    const { fname, lname, email, password } = userData;
+    const { email, password } = userLoginData;
 
     setLoading(true);
 
@@ -48,16 +46,16 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ fname, lname, email, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
 
-      if (data.message == "Required first name !") {
-        alert("Required first name !");
-        setLoading(false);
-      } else if (data.message == "Required email !") {
+      if (data.message == "Required email !") {
         alert("Required email !");
+        setLoading(false);
+      } else if (data.message == "Required password !") {
+        alert("Required password !");
         setLoading(false);
       } else if (data.message == "Required password !") {
         alert("Required password !");
@@ -65,15 +63,16 @@ const Login = () => {
       } else if (data.message == "Email id invalid !") {
         alert("Email id invalid !");
         setLoading(false);
-      } else if (data.message == "User already exists !") {
-        alert("User already exists !");
+      } else if (data.message == "This email is not registered with us !") {
+        alert("This email is not registered with us !");
         setLoading(false);
-      } else if (data.message == "Sign up Success") {
-        alert("Sign up Success");
+      } else if (data.message == "Invalid Credentials") {
+        alert("Invalid Credentials");
         setLoading(false);
-      } else if (data.message == "Server Error, try again later") {
-        alert("Server Error, try again later");
+      } else if (data.message == "Login success") {
+        alert("Login success");
         setLoading(false);
+        console.log(data.token);
       } else {
         alert("Server Error");
         setLoading(false);
@@ -109,12 +108,12 @@ const Login = () => {
                 <Input
                   type="email"
                   name="email"
-                  value={userData.email}
+                  value={userLoginData.email}
                   onChange={getUserData}
                   size="md"
                   shadow={false}
                   placeholder="Email address"
-                  aria-label="email"
+                  aria-label="login-email"
                   spellCheck={false}
                 />
                 <Input.Password
@@ -122,14 +121,15 @@ const Login = () => {
                   shadow={false}
                   type="password"
                   name="password"
-                  value={userData.password}
+                  value={userLoginData.password}
                   onChange={getUserData}
                   placeholder="Password"
-                  aria-label="password"
+                  aria-label="login-password"
                 />
                 <Button
                   className="mt-4"
                   onClick={saveData}
+                  disabled
                   css={{ backgroundColor: "$accents9 !important" }}
                 >
                   {

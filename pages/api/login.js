@@ -2,16 +2,14 @@ import connectDB from "../../middleware/db";
 import Users from "../../models/users";
 import validator from 'validator';
 import argon2id from 'argon2';
+import jwt from 'jsonwebtoken';
 
 const handler = async (req, res) => {
   if(req.method == 'POST'){
 
-    const { fname, lname, email, password } = req.body;
+    const { email, password } = req.body;
 
-    if(!fname){
-      res.status(400).json({message:"Required first name !"})
-    }
-    else if(!email){
+    if(!email){
       res.status(400).json({message:"Required email !"})
     }
     else if(!password){
@@ -25,19 +23,18 @@ const handler = async (req, res) => {
       try {
         const userExist = await Users.findOne({ email });
 
-        if(userExist){
-          res.status(400).json({message:"User already exists !"})
+        if(!userExist){
+          res.status(400).json({message:"This email is not registered with us !"})
         }
         else{
-          const passHash = await argon2id.hash(password);
-          const result = new Users({fname, lname, email, password:passHash});
-          const data = await result.save();
+          const matchPassword = await argon2id.verify(userExist.password, password);
 
-          if(data){
-            res.status(201).json({ message: "Sign up Success" });
+          if(!matchPassword){
+            res.status(400).json({message:"Invalid Credentials"});
           }
           else{
-            res.status(500).json({ message: "Server Error, try again later" });
+            const token = jwt.sign({ id: userExist._id}, process.env.token_secret_key, {expiresIn:"30m"});
+            res.status(200).json({ message: "Login success", token });
           }
         }
 
