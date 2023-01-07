@@ -3,8 +3,9 @@ import Image from "next/legacy/image";
 import { Text, Input, Button, Loading } from "@nextui-org/react";
 import NextLink from "next/link";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -26,6 +27,8 @@ const toBase64 = (str) =>
     : window.btoa(str);
 
 const SignUp = () => {
+  const router = useRouter();
+
   const [userData, setUserData] = useState({
     fname: "",
     lname: "",
@@ -48,7 +51,7 @@ const SignUp = () => {
       const res = await fetch("/api/signup", {
         method: "post",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ fname, lname, email, password }),
       });
@@ -71,7 +74,9 @@ const SignUp = () => {
         toast.error("User already exists !");
         setLoading(false);
       } else if (data.message == "Sign up Success") {
-        toast.success("Sign up Success");
+        toast.success("Sign up Success, Please login now !");
+        setUserData({ fname: "", lname: "", email: "", password: "" });
+        router.push("/login");
         setLoading(false);
       } else if (data.message == "Server Error, try again later") {
         toast.error("Server Error, try again later");
@@ -87,7 +92,12 @@ const SignUp = () => {
   };
   return (
     <>
-        <ToastContainer position="top-center" hideProgressBar={true} autoClose={4000} theme={"light"} />
+      <ToastContainer
+        position="top-center"
+        hideProgressBar={true}
+        autoClose={4000}
+        theme={"light"}
+      />
       <div className="container mx-auto md:my-12 sm:my-6 my-6 px-3">
         <div className="flex md:grid-cols-2 sm:grid-cols-1 justify-evenly">
           <div className="flex-col md:flex sm:hidden hidden place-items-center justify-center my-3">
@@ -110,9 +120,11 @@ const SignUp = () => {
             <div className="">
               <form method="post" className="py-3 px-8 flex flex-col gap-y-6">
                 <div className="grid gap-y-6 gap-x-6 md:grid-cols-2 sm:grid-cols-2 grid-cols-1">
-                  <Input
-                    size="md"
-                    shadow={false}
+                  <input
+                    className="border rounded-xl"
+                    style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
+                    // size="md"
+                    // shadow={false}
                     type="text"
                     name="fname"
                     value={userData.fname}
@@ -121,9 +133,11 @@ const SignUp = () => {
                     aria-label="first-name"
                     spellCheck={false}
                   />
-                  <Input
-                    size="md"
-                    shadow={false}
+                  <input
+                    className="border rounded-xl"
+                    style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
+                    // size="md"
+                    // shadow={false}
                     type="text"
                     name="lname"
                     value={userData.lname}
@@ -133,20 +147,24 @@ const SignUp = () => {
                     spellCheck={false}
                   />
                 </div>
-                <Input
+                <input
+                  className="border rounded-xl"
+                  style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
                   type="email"
                   name="email"
                   value={userData.email}
                   onChange={getUserData}
-                  size="md"
-                  shadow={false}
+                  // size="md"
+                  // shadow={false}
                   placeholder="Email address"
                   aria-label="email"
                   spellCheck={false}
                 />
-                <Input.Password
-                  size="md"
-                  shadow={false}
+                <input
+                  className="border rounded-xl"
+                  style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
+                  // size="md"
+                  // shadow={false}
                   type="password"
                   name="password"
                   value={userData.password}
@@ -159,9 +177,14 @@ const SignUp = () => {
                   onClick={saveData}
                   css={{ backgroundColor: "$accents9 !important" }}
                 >
-                  {
-                    loading ? <> <Loading color="white" size="sm" /> </> : "Sign up"
-                  }
+                  {loading ? (
+                    <>
+                      {" "}
+                      <Loading color="white" size="sm" />{" "}
+                    </>
+                  ) : (
+                    "Sign up"
+                  )}
                 </Button>
               </form>
             </div>

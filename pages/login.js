@@ -111,26 +111,30 @@ const Login = () => {
               )}`}
             />
           </div>
-          <div className="md:py-12 flex flex-col rounded-lg my-3">
+          <div className="md:py-12 w-80 flex flex-col rounded-lg my-3">
             <Text size={24} className="font-Calisga text-center mb-10">
               Login as Librarian
             </Text>
             <div className="">
-              <form method="post" className="py-3 px-8 flex flex-col gap-y-6">
-                <Input
+              <form method="post" className="py-3 px-2 flex flex-col gap-y-6">
+                <input
+                  className="border rounded-xl"
+                  style={{padding:"8px 10px", backgroundColor:"#F1F3F5"}}
                   type="email"
                   name="email"
                   value={userLoginData.email}
                   onChange={getUserData}
-                  size="md"
-                  shadow={false}
+                  // size="md"
+                  // shadow={false}
                   placeholder="Email address"
                   aria-label="login-email"
                   spellCheck={false}
                 />
-                <Input.Password
-                  size="md"
-                  shadow={false}
+                <input
+                  className="border rounded-xl"
+                  style={{padding:"8px 10px", backgroundColor:"#F1F3F5"}}
+                  // size="md"
+                  // shadow={false}
                   type="password"
                   name="password"
                   value={userLoginData.password}
