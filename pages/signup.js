@@ -76,7 +76,7 @@ const SignUp = () => {
       } else if (data.message == "Sign up Success") {
         toast.success("Sign up Success, Please login now !");
         setUserData({ fname: "", lname: "", email: "", password: "" });
-        router.push("/login");
+        setTimeout(() => { router.push("/login") }, 3000);
         setLoading(false);
       } else if (data.message == "Server Error, try again later") {
         toast.error("Server Error, try again later");
