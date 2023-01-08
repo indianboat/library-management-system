@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/legacy/image";
-import { Text, Input, Button, Loading } from "@nextui-org/react";
+import { Text, Button, Loading, Tooltip } from "@nextui-org/react";
 import NextLink from "next/link";
+import validator from "validator";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,12 +30,7 @@ const toBase64 = (str) =>
 const SignUp = () => {
   const router = useRouter();
 
-  const [userData, setUserData] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    password: "",
-  });
+  const [userData, setUserData] = useState({ fname: "", lname: "", email: "", password: "" });
 
   const getUserData = (event) => {
     setUserData({ ...userData, [event.target.name]: event.target.value });
@@ -42,52 +38,124 @@ const SignUp = () => {
 
   const [loading, setLoading] = useState(false);
 
+  // Validation for Sign up
+  const [errorCount, setErrorCount] = useState({ fname: 1, email: 1, password: 1 });
+  const [strongPasswordMessage, setSPM] = useState(true);
+
+  useEffect(() => {
+    let fname = document.getElementById("fname");
+
+    if (userData.fname == "") {
+      fname.style.color = "black";
+      fname.style.backgroundColor = "#F1F3F5";
+      setErrorCount({ ...errorCount, fname: 1 });
+    } else if (userData.fname != "" && userData.fname.length > 2) {
+      fname.style.color = "#1f811d";
+      fname.style.backgroundColor = "#dcffd6";
+      setErrorCount({ ...errorCount, fname: 0 });
+    } else if (userData.fname.length <= 2) {
+      fname.style.color = "#a80000";
+      fname.style.backgroundColor = "#ffd9dc";
+      setErrorCount({ ...errorCount, fname: 1 });
+    }
+  }, [userData.fname]);
+
+  useEffect(() => {
+    let lname = document.getElementById("lname");
+
+    if (userData.lname == "") {
+      lname.style.color = "black";
+      lname.style.backgroundColor = "#F1F3F5";
+    } else if (userData.lname != "") {
+      lname.style.color = "#1f811d";
+      lname.style.backgroundColor = "#dcffd6";
+    }
+  }, [userData.lname]);
+
+  useEffect(() => {
+    let emailSignup = document.getElementById("emailSignup");
+
+    if (userData.email == "") {
+      emailSignup.style.color = "black";
+      emailSignup.style.backgroundColor = "#F1F3F5";
+      setErrorCount({ ...errorCount, email: 1 });
+    } else if (!validator.isEmail(userData.email)) {
+      emailSignup.style.color = "#a80000";
+      emailSignup.style.backgroundColor = "#ffd9dc";
+      setErrorCount({ ...errorCount, email: 1 });
+    } else if (userData.email != "" && validator.isEmail(userData.email)) {
+      emailSignup.style.color = "#1f811d";
+      emailSignup.style.backgroundColor = "#dcffd6";
+      setErrorCount({ ...errorCount, email: 0 });
+    }
+  }, [userData.email]);
+
+  useEffect(() => {
+    let passwordSignup = document.getElementById("passwordSignup");
+    if (userData.password == "") {
+      passwordSignup.style.color = "black";
+      passwordSignup.style.backgroundColor = "#F1F3F5";
+      setErrorCount({ ...errorCount, password: 1 });
+      setSPM(true);
+    } else if (!validator.isStrongPassword(userData.password)) {
+      passwordSignup.style.color = "#a80000";
+      passwordSignup.style.backgroundColor = "#ffd9dc";
+      setErrorCount({ ...errorCount, password: 1 });
+      setSPM(false);
+    } else if (
+      userData.password != "" &&
+      validator.isStrongPassword(userData.password)
+    ) {
+      passwordSignup.style.color = "#1f811d";
+      passwordSignup.style.backgroundColor = "#dcffd6";
+      setErrorCount({ ...errorCount, password: 0 });
+      setSPM(true);
+    }
+  }, [userData.password]);
+
   const saveData = async () => {
-    const { fname, lname, email, password } = userData;
+    if (errorCount.fname == 1) {
+      fname.style.backgroundColor = "#ffd9dc";
+    } else if (errorCount.email == 1) {
+      emailSignup.style.backgroundColor = "#ffd9dc";
+    } else if (errorCount.password == 1) {
+      passwordSignup.style.backgroundColor = "#ffd9dc";
+    } else {
+      const { fname, lname, email, password } = userData;
+      setLoading(true);
 
-    setLoading(true);
+      try {
+        const res = await fetch("/api/signup", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ fname, lname, email, password }),
+        });
 
-    try {
-      const res = await fetch("/api/signup", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ fname, lname, email, password }),
-      });
+        const data = await res.json();
 
-      const data = await res.json();
-
-      if (data.message == "Required first name !") {
-        toast.error("Required first name !");
-        setLoading(false);
-      } else if (data.message == "Required email !") {
-        toast.error("Required email !");
-        setLoading(false);
-      } else if (data.message == "Required password !") {
-        toast.error("Required password !");
-        setLoading(false);
-      } else if (data.message == "Email id invalid !") {
-        toast.error("Email id invalid !");
-        setLoading(false);
-      } else if (data.message == "User already exists !") {
-        toast.error("User already exists !");
-        setLoading(false);
-      } else if (data.message == "Sign up Success") {
-        toast.success("Sign up Success, Please login now !");
-        setUserData({ fname: "", lname: "", email: "", password: "" });
-        setTimeout(() => { router.push("/login") }, 3000);
-        setLoading(false);
-      } else if (data.message == "Server Error, try again later") {
-        toast.error("Server Error, try again later");
-        setLoading(false);
-      } else {
-        toast.error("Server Error");
+        if (data.message == "User already exists !") {
+          toast.error("User already exists !");
+          setLoading(false);
+        } else if (data.message == "Sign up Success") {
+          toast.success("Sign up Success, Redirecting to login...");
+          setUserData({ fname: "", lname: "", email: "", password: "" });
+          setLoading(false);
+          setTimeout(() => {
+            router.push("/login");
+          }, 3000);
+        } else if (data.message == "Server Error, try again later") {
+          toast.error("Server Error, try again later");
+          setLoading(false);
+        } else {
+          toast.error("Server Error");
+          setLoading(false);
+        }
+      } catch (error) {
+        toast.error(error);
         setLoading(false);
       }
-    } catch (error) {
-      toast.error(error);
-      setLoading(false);
     }
   };
   return (
@@ -98,7 +166,7 @@ const SignUp = () => {
         autoClose={4000}
         theme={"light"}
       />
-      <div className="container mx-auto md:my-12 sm:my-6 my-6 px-3">
+      <div className="container mx-auto md:my-0 sm:my-6 my-6 px-3">
         <div className="flex md:grid-cols-2 sm:grid-cols-1 justify-evenly">
           <div className="flex-col md:flex sm:hidden hidden place-items-center justify-center my-3">
             <Image
@@ -120,58 +188,84 @@ const SignUp = () => {
             <div className="">
               <form method="post" className="py-3 px-8 flex flex-col gap-y-6">
                 <div className="grid gap-y-6 gap-x-6 md:grid-cols-2 sm:grid-cols-2 grid-cols-1">
+                  <div className="flex flex-col gap-y-1">
+                    <label htmlFor="lfname">
+                      First Name<span className="text-rose-900">*</span>
+                    </label>
+                    <input
+                      className="rounded-xl shadow-md"
+                      style={{
+                        padding: "8px 10px",
+                        backgroundColor: "#F1F3F5",
+                      }}
+                      id="fname"
+                      type="text"
+                      name="fname"
+                      value={userData.fname}
+                      onChange={getUserData}
+                      placeholder="First Name"
+                      aria-label="first-name"
+                      spellCheck={false}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-y-1">
+                    <label htmlFor="lname">Last Name</label>
+                    <input
+                      id="lname"
+                      className="rounded-xl shadow-md"
+                      style={{
+                        padding: "8px 10px",
+                        backgroundColor: "#F1F3F5",
+                      }}
+                      type="text"
+                      name="lname"
+                      value={userData.lname}
+                      onChange={getUserData}
+                      placeholder="Last Name"
+                      aria-label="last-name"
+                      spellCheck={false}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-y-1">
+                  <label htmlFor="emailSignup">
+                    Email Id<span className="text-rose-900">*</span>
+                  </label>
                   <input
-                    className="border rounded-xl"
+                    id="emailSignup"
+                    className="rounded-xl shadow-md"
                     style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
-                    // size="md"
-                    // shadow={false}
-                    type="text"
-                    name="fname"
-                    value={userData.fname}
+                    type="email"
+                    name="email"
+                    value={userData.email}
                     onChange={getUserData}
-                    placeholder="First Name*"
-                    aria-label="first-name"
-                    spellCheck={false}
-                  />
-                  <input
-                    className="border rounded-xl"
-                    style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
-                    // size="md"
-                    // shadow={false}
-                    type="text"
-                    name="lname"
-                    value={userData.lname}
-                    onChange={getUserData}
-                    placeholder="Last Name"
-                    aria-label="last-name"
+                    placeholder="Email address"
+                    aria-label="email"
                     spellCheck={false}
                   />
                 </div>
-                <input
-                  className="border rounded-xl"
-                  style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
-                  type="email"
-                  name="email"
-                  value={userData.email}
-                  onChange={getUserData}
-                  // size="md"
-                  // shadow={false}
-                  placeholder="Email address"
-                  aria-label="email"
-                  spellCheck={false}
-                />
-                <input
-                  className="border rounded-xl"
-                  style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
-                  // size="md"
-                  // shadow={false}
-                  type="password"
-                  name="password"
-                  value={userData.password}
-                  onChange={getUserData}
-                  placeholder="Create Password"
-                  aria-label="password"
-                />
+                <div className="flex flex-col gap-y-1">
+                  <label htmlFor="passwordSignup">
+                    Create Strong Password
+                    <span className="text-rose-900">*</span>
+                  </label>
+                  <Tooltip content={"Must contain at least 1 number and 1 uppercase and lowercase letter, and at least 8 or more characters"} className="w-full">
+
+                  <input 
+                    id="passwordSignup"
+                    className="rounded-xl shadow-md w-full"
+                    style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
+                    type="password"
+                    name="password"
+                    value={userData.password}
+                    onChange={getUserData}
+                    placeholder="Create Password"
+                    aria-label="password"
+                  />
+                  </Tooltip>
+                 
+                  {/* <div className="text-rose-800 text-center" hidden={strongPasswordMessage}></div> */}
+                </div>
                 <Button
                   className="mt-4"
                   onClick={saveData}

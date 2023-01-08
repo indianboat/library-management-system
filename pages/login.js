@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/legacy/image";
-import { Text, Button, Loading, Checkbox } from "@nextui-org/react";
+import { Text, Button, Loading, Checkbox, Tooltip } from "@nextui-org/react";
 import NextLink from "next/link";
 import { setCookie } from "nookies";
 import { useRouter } from "next/router";
+import validator from "validator";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -43,56 +44,92 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // Validation for sign in
+  const [emailErrorCount, setEmailErrorCount] = useState(0);
+  const [passwordErrorCount, setPasswordErrorCount] = useState(0);
+
+  useEffect(() => {
+    let emailInput = document.getElementById("emailInput");
+
+    if (userLoginData.email == "") {
+      emailInput.style.color = "black";
+      emailInput.style.backgroundColor = "#F1F3F5";
+      setEmailErrorCount(1);
+    } else if (!validator.isEmail(userLoginData.email)) {
+      emailInput.style.color = "#a80000";
+      emailInput.style.backgroundColor = "#ffd9dc";
+      setEmailErrorCount(1);
+    } else if (validator.isEmail(userLoginData.email)) {
+      emailInput.style.color = "#1f811d";
+      emailInput.style.backgroundColor = "#dcffd6";
+      setEmailErrorCount(0);
+    }
+  }, [userLoginData.email]);
+
+  useEffect(() => {
+    let passwordInput = document.getElementById("passwordInput");
+
+    if (userLoginData.password == "") {
+      passwordInput.style.color = "black";
+      setPasswordErrorCount(1);
+      passwordInput.style.backgroundColor = "#F1F3F5";
+    } else if (userLoginData.password.length >= 8) {
+      passwordInput.style.color = "#1f811d";
+      passwordInput.style.backgroundColor = "#dcffd6";
+      setPasswordErrorCount(0);
+    } else if (userLoginData.password.length < 8) {
+      passwordInput.style.color = "#a80000";
+      passwordInput.style.backgroundColor = "#ffd9dc";
+      setPasswordErrorCount(1);
+    }
+  }, [userLoginData.password])
+  
+
   const saveData = async () => {
-    const { email, password } = userLoginData;
+    if (emailErrorCount == 1) {
+      emailInput.style.backgroundColor = "#ffd9dc";
+    } else if (passwordErrorCount == 1){
+      passwordInput.style.backgroundColor = "#ffd9dc";
+    } else {
+      const { email, password } = userLoginData;
 
-    setLoading(true);
+      setLoading(true);
 
-    try {
-      const res = await fetch("/api/login", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      try {
+        const res = await fetch("/api/login", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      if (data.message == "Required email !") {
-        toast.error("Required email !");
-        setLoading(false);
-      } else if (data.message == "Required password !") {
-        toast.error("Required password !");
-        setLoading(false);
-      } else if (data.message == "Required password !") {
-        toast.error("Required password !");
-        setLoading(false);
-      } else if (data.message == "Email id invalid !") {
-        toast.error("Email id invalid !");
-        setLoading(false);
-      } else if (data.message == "This email is not registered with us !") {
-        toast.error("This email is not registered with us !");
-        setLoading(false);
-      } else if (data.message == "Invalid Credentials") {
-        toast.error("Invalid Credentials");
-        setLoading(false);
-      } else if (data.message == "Login success") {
-        toast.success("Login Success !");
-        setCookie(null, "user_session", data.token, { secure: true });
-        setLoading(false);
-        setTimeout(() => {
-          router.push("/dashboard");
-        }, 3000);
-      } else {
-        toast.error("Server Error");
+        if (data.message == "This email is not registered with us !") {
+          toast.error("User does not exists. Please sign up !");
+          setLoading(false);
+        } else if (data.message == "Invalid Credentials") {
+          toast.error("Invalid Credentials");
+          setLoading(false);
+        } else if (data.message == "Login success") {
+          toast.success("Login Success !");
+          setCookie(null, "user_session", data.token, { secure: true });
+          setLoading(false);
+          setTimeout(() => {
+            router.push("/dashboard");
+          }, 3000);
+        } else {
+          toast.error("Server Error");
+          setLoading(false);
+        }
+      } catch (error) {
+        toast.error(error);
         setLoading(false);
       }
-    } catch (error) {
-      toast.error(error);
-      setLoading(false);
     }
   };
+
   return (
     <>
       <ToastContainer
@@ -100,6 +137,7 @@ const Login = () => {
         hideProgressBar={true}
         autoClose={4000}
         theme={"light"}
+        className="sm:w-1/2"
       />
       <div className="container mx-auto md:my-0 sm:my-6 my-6 px-3">
         <div className="flex md:grid-cols-2 sm:grid-cols-1 justify-evenly">
@@ -126,10 +164,11 @@ const Login = () => {
             <div className="">
               <form method="post" className="py-3 px-2 flex flex-col gap-y-6">
                 <div className="flex flex-col gap-y-1">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="emailInput">Email</label>
                   <input
-                    id="email"
-                    className="rounded-xl"
+                    id="emailInput"
+                    autoFocus
+                    className="rounded-xl shadow-md"
                     style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
                     type="email"
                     name="email"
@@ -144,29 +183,36 @@ const Login = () => {
                 </div>
 
                 <div className="flex flex-col gap-y-1">
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="passwordInput">Password</label>
                   <input
-                    id="password"
-                    className="rounded-xl"
+                    id="passwordInput"
+                    className="rounded-xl shadow-md"
                     style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
-                    // size="md"
-                    // shadow={false}
                     type="password"
                     name="password"
+                    minLength={8}
                     value={userLoginData.password}
                     onChange={getUserData}
+                    // size="md"
+                    // shadow={false}
                     placeholder="Password"
                     aria-label="login-password"
                   />
                 </div>
                 <div className="flex md:flex-row sm:flex-col flex-col md:justify-between sm:justify-center text-center sm:gap-y-3">
-                <Checkbox size="sm" className="sm:justify-center justify-center">
-                  Remember me
-                </Checkbox>
-                <NextLink href="#" className="font-bold">Forgot Password</NextLink>
+                  <Checkbox
+                    size="sm"
+                    className="sm:justify-center justify-center"
+                  >
+                    Remember me
+                  </Checkbox>
+                  <NextLink href="#" className="font-bold">
+                    Forgot Password
+                  </NextLink>
                 </div>
+
                 <Button
-                  className=" -z-0 "
+                  className="z-0 w-full"
                   onClick={saveData}
                   css={{ backgroundColor: "$accents9 !important" }}
                 >
