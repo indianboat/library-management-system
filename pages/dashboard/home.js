@@ -9,7 +9,8 @@ export async function getServerSideProps(ctx){
   const { user_session } = parseCookies(ctx);
   const token = jwt.decode(user_session);
 
-  const res = await fetch(`https://amrita-lms.vercel.app/api/${token.id}`);
+  const res = await fetch(`http://localhost:3000/api/${token.id}`);
+  // const res = await fetch(`https://amrita-lms.vercel.app/api/${token.id}`);
   const data = await res.json();
 
   if (token == null) {
