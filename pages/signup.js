@@ -249,7 +249,7 @@ const SignUp = () => {
                     Create Strong Password
                     <span className="text-rose-900">*</span>
                   </label>
-                  <Tooltip content={"Must contain at least 1 number and 1 uppercase and lowercase letter, and at least 8 or more characters"} className="w-full">
+                  <Tooltip content={"Must contain at least 1 number, 1 special character and 1 uppercase & lowercase letter, and at least 8 or more characters"} className="w-full">
 
                   <input 
                     id="passwordSignup"

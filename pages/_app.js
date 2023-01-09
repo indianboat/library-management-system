@@ -5,13 +5,8 @@ import Head from "next/head";
 import NextNProgress from 'nextjs-progressbar';
 import NProgress from 'nprogress';
 
-
-
 export default function App({ Component, pageProps }) {
-
-
   NProgress.configure({showSpinner:false, trickle:false, minimum:0.01})
-
   return (
     <>
     <NextNProgress color="#333333" height={2}/>
@@ -22,7 +17,6 @@ export default function App({ Component, pageProps }) {
       </Head>
       <NextUIProvider>
         <Layout>
-          
           <Component {...pageProps} />
         </Layout>
       </NextUIProvider>

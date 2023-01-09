@@ -113,12 +113,10 @@ const Login = () => {
           toast.error("Invalid Credentials");
           setLoading(false);
         } else if (data.message == "Login success") {
-          toast.success("Login Success !");
-          setCookie(null, "user_session", data.token, { secure: true });
+          toast.success("Login Success, redirecting....");
+          setCookie(null, "user_session", data.token, {path:"/", secure: true });
           setLoading(false);
-          setTimeout(() => {
-            router.push("/dashboard");
-          }, 3000);
+          router.push("/dashboard/home");
         } else {
           toast.error("Server Error");
           setLoading(false);
