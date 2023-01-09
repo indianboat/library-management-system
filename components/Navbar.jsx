@@ -10,8 +10,13 @@ const NavbarBody = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const router = useRouter();
 
+  const logoutUser = (e) => {
+    destroyCookie(null, "user_session");
+    router.push("/login");
+  };
+
   useEffect(() => {
-    if (user_session != null) {
+    if (user_session) {
       setIsUserLoggedIn(true);
     } else {
       setIsUserLoggedIn(false);
@@ -32,10 +37,7 @@ const NavbarBody = () => {
     isSideMenuOpen && navbarToggleRef.current.click();
   };
 
-  const logoutUser = () => {
-    destroyCookie(null, "user_session");
-    router.push("/");
-  };
+
 
   return (
     <>
@@ -142,7 +144,6 @@ const NavbarBody = () => {
                         <p
                           className="py-1 w-full px-3"
                           onClick={logoutUser}
-                          role="button"
                         >
                           Logout
                         </p>

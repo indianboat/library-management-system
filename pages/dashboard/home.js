@@ -33,7 +33,7 @@ const DashboardHome = ({data}) => {
   });
 
   if(data.library_name == ""){
-    setLibraryData
+    // setLibraryData
   }
 
   return (
