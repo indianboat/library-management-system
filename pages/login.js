@@ -114,9 +114,9 @@ const Login = () => {
           setLoading(false);
         } else if (data.message == "Login success") {
           toast.success("Login Success, redirecting....");
-          setCookie(null, "user_session", data.token, {secure: true, maxAge:60*30 });
           setLoading(false);
           router.push("/dashboard/home");
+          setCookie(res, "token", data.token, {path:"/", secure: process.env.NODE_ENV=="production", maxAge:60*60 });
         } else {
           toast.error("Server Error");
           setLoading(false);

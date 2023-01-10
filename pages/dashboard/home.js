@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import jwt from 'jsonwebtoken';
 import { parseCookies } from 'nookies';
-import { Button } from '@nextui-org/react';
+import { Button, Text } from '@nextui-org/react';
 import NextLink from 'next/link';
 
 export async function getServerSideProps(ctx){
 
-  const { user_session } = parseCookies(ctx);
-  const token = jwt.decode(user_session);
+  const { token } = parseCookies(ctx);
+  const token_value = jwt.decode(token);
 
-  // const res = await fetch(`http://localhost:3000/api/${token.id}`);
-  const res = await fetch(`https://amrita-lms.vercel.app/api/${token.id}`);
-  const data = await res.json();
-
-  if (token == null) {
+  if (token_value == undefined) {
     return {
       redirect: {
         destination: "/login",
@@ -21,29 +17,49 @@ export async function getServerSideProps(ctx){
       },
     }
   }
-  return {
-    props: {data}
+  else{
+    // const res = await fetch(`http://localhost:3000/api/${token_value.id}`);
+    const res = await fetch(`https://amrita-lms.vercel.app/api/${token_value.id}`);
+    const data = await res.json();
+    return {
+      props: {data}
+    }
   }
+  
 }
 
 const DashboardHome = ({data}) => {
 
   const [libraryData, setLibraryData] = useState({
-    library_name:"",
-    
+    library_name:data.library_name,
   });
 
-  if(data.library_name == ""){
-    // setLibraryData
-  }
+  useEffect(() => {
+    if(data.library_name == ""){
+      setLibraryData({library_name:"You have not any library"})
+    }
+    else{
+      setLibraryData({library_name:""})
+    }
+  }, [data.library_name])
+  
 
   return (
     <>
-      <div className="container mx-auto my-6">       
-        <div className="grid gap-y-4 justify-center">
+      <div className="container mx-auto my-6 border">       
+        {/* <div className="grid gap-y-4 border justify-center">
         welcome back, {data.fname}{data.lname}
-        <NextLink color="default" href="#" className="bg-gray-500 px-4 py-2 shadow shadow-gray-300 rounded-xl text-white">Create a Library</NextLink>
+        <NextLink color="default" href="/dashboard/addlibrary" className="bg-gray-500 px-4 py-2 shadow shadow-gray-300 rounded-xl text-white">Add your Library Online</NextLink>
         </div>
+        <div className="">
+          <p>{libraryData.library_name}</p>
+        </div> */}
+        <div className="">
+          <Text b size={30}>Congratulations, <i className='font-thin'>{data.fname}</i></Text>
+        </div>
+
+
+
       </div>
     </>
   )

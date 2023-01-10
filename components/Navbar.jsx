@@ -1,27 +1,31 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Navbar, Button, Dropdown, Avatar, Grid } from "@nextui-org/react";
+import { Navbar, Dropdown, Avatar, Grid, Text, User } from "@nextui-org/react";
 import NextLink from "next/link";
 import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
+import jwt from 'jsonwebtoken';
 
 const NavbarBody = () => {
-  const { user_session } = parseCookies();
-
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const router = useRouter();
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  const logoutUser = (e) => {
-    destroyCookie(null, "user_session");
-    router.push("/login");
-  };
+  const { token } = parseCookies();
+
+  const tokenValues = jwt.decode(token);
+
+  const [firstName, setFirstName] = useState(tokenValues==null ? "First Name" : tokenValues.user_first_name);
+  const [lastName, setLastName] = useState(tokenValues==null ? "Last Name" : tokenValues.user_last_name);
 
   useEffect(() => {
-    if (user_session) {
+    if (token) {
       setIsUserLoggedIn(true);
-    } else {
+    } else if(token == undefined) {
       setIsUserLoggedIn(false);
     }
-  }, [user_session]);
+    else{
+      setIsUserLoggedIn(false);
+    }
+  }, [token]);
 
   const navbarToggleRef = useRef();
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
@@ -37,7 +41,10 @@ const NavbarBody = () => {
     isSideMenuOpen && navbarToggleRef.current.click();
   };
 
-
+  const logoutUser = () => {
+    destroyCookie(undefined, "token");
+    router.push("/login");
+  };
 
   return (
     <>
@@ -110,43 +117,97 @@ const NavbarBody = () => {
             <>
               <Grid.Container justify="flex-start" gap={2}>
                 <Grid>
-                  <Dropdown placement="bottom-left">
+                  <Dropdown placement="bottom-right">
                     <Dropdown.Trigger>
-                      <Avatar
-                        size="lg"
+                      <User
+                        bordered
                         as="button"
-                        color=""
+                        size="md"
+                        name={firstName}
+                        description={lastName}
                         src="/user.png"
+                        style={{transform:"screenX(-1)"}}
                       />
                     </Dropdown.Trigger>
-                    <Dropdown.Menu variant="shadow"
-                      color="default"
-                      aria-label="Avatar Actions"
-                    >
+                    <Dropdown.Menu color="default" aria-label="Avatar Actions">
                       <Dropdown.Item
+                        className="px-0"
+                        key="homepage"
+                        textValue="homepage"
+                      >
+                        <NextLink
+                          style={{
+                            paddingTop: "2.4px",
+                            paddingBottom: "2.4px",
+                          }}
+                          className="px-3 block rounded-lg"
+                          href="/dashboard/home"
+                        >
+                          Dashboard
+                        </NextLink>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className="px-0"
                         key="settings"
-                        description="Add School/University"
                         textValue="settings"
                       >
-                        Add Library
+                        <NextLink
+                          style={{
+                            paddingTop: "2.4px",
+                            paddingBottom: "2.4px",
+                          }}
+                          className="px-3 block rounded-lg"
+                          href="/dashboard/addlibrary"
+                        >
+                          Add Library
+                        </NextLink>
                       </Dropdown.Item>
                       <Dropdown.Item
+                        className="px-0"
                         key="team_settings"
-                        description="Manage Library"
                         textValue="manage"
                       >
-                        Settings
+                        <NextLink
+                          style={{
+                            paddingTop: "2.4px",
+                            paddingBottom: "2.4px",
+                          }}
+                          className="px-3 block rounded-lg"
+                          href="/dashboard/home#"
+                        >
+                          Settings
+                        </NextLink>
                       </Dropdown.Item>
-                      <Dropdown.Item key="configurations" textValue="manage">
-                        Change Password
+                      <Dropdown.Item
+                        className="px-0"
+                        key="configurations"
+                        textValue="manage"
+                      >
+                        <NextLink
+                          style={{
+                            paddingTop: "2.4px",
+                            paddingBottom: "2.4px",
+                          }}
+                          className="px-3 block rounded-lg"
+                          href="/dashboard/home#"
+                        >
+                          Change Password
+                        </NextLink>
                       </Dropdown.Item>
-                      <Dropdown.Item className="px-0" key="logout" color="error" withDivider textValue="logout">
-                        <p
+                      <Dropdown.Item
+                        className="px-0"
+                        key="logout"
+                        color="error"
+                        withDivider
+                        textValue="logout"
+                      >
+                        <Text
+                          color="error"
                           className="py-1 w-full px-3"
                           onClick={logoutUser}
                         >
                           Logout
-                        </p>
+                        </Text>
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>

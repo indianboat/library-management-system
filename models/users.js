@@ -9,13 +9,11 @@ const myListSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     library_name: { type: String, default: "" },
+    library_type: { type: String, default: "" },
     library_code: { type: String, default: `LMS${lcode}`, unique: true },
-    school_name: { type: String , default:""},
-    university_name: { type: String, default:"" },
     librarian_name: {type:String, default:""},
-    librarian_phone: {type:String, default:""}
-
-
+    librarian_phone: {type:String, default:""},
+    library_address :{type:String, default:""}
 
   },{ timestamps: true }
 );
