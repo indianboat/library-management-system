@@ -118,7 +118,7 @@ const NavbarBody = () => {
             <>
               <Grid.Container justify="flex-start" className="py-0 px-0" gap={2}>
                 <Grid className="flex align-middle justify-center place-items-center gap-x-3">
-                  <Text hideIn={"xs"} b size={14}>
+                  <Text b size={14}>
                     Hello {firstName}
                   </Text>
                   <Dropdown placement="bottom-right">
