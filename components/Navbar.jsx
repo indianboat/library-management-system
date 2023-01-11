@@ -1,28 +1,28 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Navbar, Dropdown, Avatar, Grid, Text, User } from "@nextui-org/react";
+import { Navbar, Dropdown, Grid, Text, Avatar } from "@nextui-org/react";
 import NextLink from "next/link";
 import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from "next/router";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 const NavbarBody = () => {
   const router = useRouter();
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   const { token } = parseCookies();
-
   const tokenValues = jwt.decode(token);
 
-  const [firstName, setFirstName] = useState(tokenValues==null ? "First Name" : tokenValues.user_first_name);
-  const [lastName, setLastName] = useState(tokenValues==null ? "Last Name" : tokenValues.user_last_name);
+  const [firstName, setFirstName] = useState("First Name");
+  const [lastName, setLastName] = useState("Last Name");
 
   useEffect(() => {
     if (token) {
       setIsUserLoggedIn(true);
-    } else if(token == undefined) {
+      setFirstName(tokenValues.user_first_name);
+      setLastName(tokenValues.user_last_name);
+    } else if (token == undefined) {
       setIsUserLoggedIn(false);
-    }
-    else{
+    } else {
       setIsUserLoggedIn(false);
     }
   }, [token]);
@@ -42,7 +42,7 @@ const NavbarBody = () => {
   };
 
   const logoutUser = () => {
-    destroyCookie(undefined, "token");
+    destroyCookie(undefined, "token", { path:"/", secure:true });
     router.push("/login");
   };
 
@@ -56,6 +56,7 @@ const NavbarBody = () => {
           name="toggleButton"
         />
         <Navbar.Brand
+          hideIn={"xs"}
           onClick={() => HandleSideMenu("/")}
           css={{ "@xs": { w: "12%" } }}
         >
@@ -70,7 +71,7 @@ const NavbarBody = () => {
               <NextLink
                 className="font-semibold"
                 color="inherit"
-                href={"/dashboard/home"}
+                href={"/dashboard"}
               >
                 Library Manager Dashboard
               </NextLink>
@@ -115,25 +116,26 @@ const NavbarBody = () => {
             </>
           ) : (
             <>
-              <Grid.Container justify="flex-start" gap={2}>
-                <Grid>
+              <Grid.Container justify="flex-start" className="py-0 px-0" gap={2}>
+                <Grid className="flex align-middle justify-center place-items-center gap-x-3">
+                  <Text hideIn={"xs"} b size={14}>
+                    Hello {firstName}
+                  </Text>
                   <Dropdown placement="bottom-right">
                     <Dropdown.Trigger>
-                      <User
-                        bordered
-                        as="button"
-                        size="md"
-                        name={firstName}
-                        description={lastName}
-                        src="/user.png"
-                        style={{transform:"screenX(-1)"}}
-                      />
+                      <Avatar bordered size="md" as="button" src="/user.png" />
                     </Dropdown.Trigger>
                     <Dropdown.Menu color="default" aria-label="Avatar Actions">
+                      <Dropdown.Item key="profile" css={{ height: "$14" }} textValue="welcome">
+                        <Text b color="inherit" className="font-Inter" css={{ d: "flex" }}>
+                          {`Welcome ${firstName} ${lastName}`}
+                        </Text>
+                      </Dropdown.Item>
                       <Dropdown.Item
                         className="px-0"
                         key="homepage"
                         textValue="homepage"
+                        withDivider
                       >
                         <NextLink
                           style={{
@@ -141,7 +143,7 @@ const NavbarBody = () => {
                             paddingBottom: "2.4px",
                           }}
                           className="px-3 block rounded-lg"
-                          href="/dashboard/home"
+                          href="/dashboard"
                         >
                           Dashboard
                         </NextLink>

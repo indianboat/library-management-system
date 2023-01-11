@@ -3,6 +3,7 @@ import Image from "next/legacy/image";
 import { Text, Button, Loading, Checkbox, Tooltip } from "@nextui-org/react";
 import NextLink from "next/link";
 import { setCookie } from "nookies";
+
 import { useRouter } from "next/router";
 import validator from "validator";
 
@@ -29,6 +30,7 @@ const toBase64 = (str) =>
     : window.btoa(str);
 
 const Login = () => {
+
   const [userLoginData, setUserLoginData] = useState({
     email: "",
     password: "",
@@ -115,8 +117,10 @@ const Login = () => {
         } else if (data.message == "Login success") {
           toast.success("Login Success, redirecting....");
           setLoading(false);
-          router.push("/dashboard/home");
-          setCookie(res, "token", data.token, {path:"/", secure: process.env.NODE_ENV=="production", maxAge:60*60 });
+         
+          setCookie(null, "token", data.token, { secure: process.env.NODE_ENV=="production", maxAge:60*60 });
+          router.push("/dashboard");
+
         } else {
           toast.error("Server Error");
           setLoading(false);
