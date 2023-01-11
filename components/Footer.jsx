@@ -34,7 +34,7 @@ const Footer = () => {
               Pankaj
             </Text>
             <Text className="font-Inter" css={{ color: "$accents5" }}>
-              &copy; CopyRight {new Date().getFullYear(2022)} <span className="text-gray-400 font-thin">v0.0.6-beta</span>
+              &copy; CopyRight {new Date().getFullYear(2022)} <span className="text-gray-400 font-thin">v0.0.7-beta</span>
             </Text>
           </div>
         </div>
