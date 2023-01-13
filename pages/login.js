@@ -201,7 +201,7 @@ const Login = () => {
                     aria-label="login-password"
                   />
                 </div>
-                <div className="flex md:flex-row sm:flex-col flex-col md:justify-between sm:justify-center text-center sm:gap-y-3">
+                <div className="flex md:flex-row justify-between text-center sm:gap-y-3">
                   <Checkbox
                     size="sm"
                     className="sm:justify-center justify-center"

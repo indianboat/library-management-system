@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+const { defaultTheme } = require('@nextui-org/react');
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -15,7 +17,12 @@ module.exports = {
         BoncheLight:["BoncheLight"],
         EdensorFree:["EdensorFree"],
         SimpleDaily:["SimpleDaily"],
-        Calisga:["Calisga"]
+        Calisga:["Calisga"],
+        PoppinsMedium:["PoppinsMedium"],
+        PoppinsRegular:["PoppinsRegular"],
+        PoppinsBold:["PoppinsBold"],
+        PoppinsLight:["PoppinsLight"],
+        PoppinsExtraLight:["PoppinsExtraLight"],
       }
     },
   },

@@ -180,4 +180,34 @@ a {
     font-style: normal;
     font-display: block;
   }
+  @font-face {
+    font-family: "PoppinsMedium";
+    src: url(/fonts/PoppinsMedium.ttf) format("truetype");
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "PoppinsRegular";
+    src: url(/fonts/PoppinsRegular.ttf) format("truetype");
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "PoppinsBold";
+    src: url(/fonts/PoppinsBold.ttf) format("truetype");
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "PoppinsLight";
+    src: url(/fonts/PoppinsLight.ttf) format("truetype");
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "PoppinsExtraLight";
+    src: url(/fonts/PoppinsExtraLight.ttf) format("truetype");
+    font-style: normal;
+    font-display: block;
+  }
 }
