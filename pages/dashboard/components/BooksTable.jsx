@@ -1,7 +1,16 @@
 import React from "react";
-import { Table, Row, Col, Tooltip, User, Text, Badge  } from "@nextui-org/react";
-import { IconButton } from "./IconButton";
-import { Show, Edit, Delete } from "react-iconly";
+import {
+  Table,
+  Row,
+  Col,
+  Tooltip,
+  User,
+  Text,
+  Badge
+} from "@nextui-org/react";
+import { ShowIcon } from "./icons/ShowIcon";
+import { DeleteIcon } from "./icons/DeleteIcon";
+import { EditIcon } from "./icons/EditIcon";
 
 const BooksTable = () => {
   const columns = [
@@ -89,24 +98,31 @@ const BooksTable = () => {
           </Col>
         );
       case "status":
-        return <Badge variant="flat" color={user.status} >{cellValue}</Badge>;
+        return (
+          <Badge variant="flat" color={user.status}>
+            {cellValue}
+          </Badge>
+        );
 
       case "actions":
         return (
           <Row justify="center" align="center">
             <Col css={{ d: "flex" }}>
               <Tooltip content="Details">
-                  <Show onClick={() => console.log("View user", user.id)} size={20} primaryColor="#979797" />
+                <ShowIcon fill="#3e3e3e" size={18} />
+                {/* <ShowIcon onClick={() => console.log("View user", user.id)} size={20} primaryColor="#979797" /> */}
               </Tooltip>
             </Col>
             <Col css={{ d: "flex" }}>
               <Tooltip content="Edit user">
-                  <Edit onClick={() => console.log("Edit user", user.id)} size={20} primaryColor="#979797" />
+                <EditIcon fill="#3e3e3e" size={18} />
+                {/* <Edit onClick={() => console.log("Edit user", user.id)} size={20} primaryColor="#979797" /> */}
               </Tooltip>
             </Col>
             <Col css={{ d: "flex" }}>
               <Tooltip content="Delete user" color="error">
-                  <Delete  onClick={() => console.log("Delete user", user.id)} size={20} primaryColor="#FF0080" />
+                <DeleteIcon fill="#ad0345" size={18} />
+                {/* <Delete  onClick={() => console.log("Delete user", user.id)} size={20} primaryColor="#FF0080" /> */}
               </Tooltip>
             </Col>
           </Row>
@@ -118,25 +134,21 @@ const BooksTable = () => {
 
   return (
     <>
-      <Table compact
+      <Table
+      bordered={false}
+        compact
         className="bg-white"
         aria-label="Example table with custom cells"
         css={{
           height: "auto",
           minWidth: "100%",
-          zIndex:"0"
+          zIndex: "0",
         }}
         striped="true"
       >
         <Table.Header columns={columns}>
           {(column) => (
-            <Table.Column
-              key={column.uid}
-              // hideHeader={column.uid === "actions"}
-              // align={column.uid === "actions" ? "center" : "start"}
-            >
-              {column.name}
-            </Table.Column>
+            <Table.Column key={column.uid}>{column.name}</Table.Column>
           )}
         </Table.Header>
         <Table.Body items={users}>
