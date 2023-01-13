@@ -25,7 +25,7 @@ const NavbarBody = () => {
     } else {
       setIsUserLoggedIn(false);
     }
-  }, [token]);
+  }, [token, tokenValues]);
 
   const navbarToggleRef = useRef();
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);

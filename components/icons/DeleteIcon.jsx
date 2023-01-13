@@ -1,4 +1,4 @@
-const DeleteIcon = ({ fill, size, height, width, ...props }) => {
+export const DeleteIcon = ({ fill, size, height, width, ...props }) => {
   return (
     <svg
       id="Iconly_Curved_Delete"
@@ -38,5 +38,3 @@ const DeleteIcon = ({ fill, size, height, width, ...props }) => {
     </svg>
   );
 };
-
-export default DeleteIcon

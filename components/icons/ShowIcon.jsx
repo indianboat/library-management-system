@@ -1,4 +1,4 @@
-const ShowIcon = ({ fill, size, height, width, ...props }) => {
+export const ShowIcon = ({ fill, size, height, width, ...props }) => {
   return (
     <svg
       id="Iconly_Curved_Show"
@@ -30,5 +30,3 @@ const ShowIcon = ({ fill, size, height, width, ...props }) => {
     </svg>
   );
 };
-
-export default ShowIcon

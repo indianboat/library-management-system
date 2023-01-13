@@ -8,9 +8,10 @@ import {
   Text,
   Badge
 } from "@nextui-org/react";
-import { ShowIcon } from "./icons/ShowIcon";
-import { DeleteIcon } from "./icons/DeleteIcon";
-import { EditIcon } from "./icons/EditIcon";
+
+import { ShowIcon } from '../../../components/icons/ShowIcon';
+import { EditIcon } from '../../../components/icons/EditIcon';
+import { DeleteIcon } from "../../../components/icons/DeleteIcon";
 
 const BooksTable = () => {
   const columns = [
