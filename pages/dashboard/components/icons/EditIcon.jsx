@@ -1,4 +1,4 @@
-export const EditIcon = ({ fill, size, height, width, ...props }) => {
+const EditIcon = ({ fill, size, height, width, ...props }) => {
   return (
     <svg
       id="Iconly_Curved_Delete"
@@ -38,3 +38,5 @@ export const EditIcon = ({ fill, size, height, width, ...props }) => {
     </svg>
   );
 };
+
+export default EditIcon

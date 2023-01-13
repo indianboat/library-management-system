@@ -135,7 +135,6 @@ const BooksTable = () => {
   return (
     <>
       <Table
-      bordered={false}
         compact
         className="bg-white"
         aria-label="Example table with custom cells"
