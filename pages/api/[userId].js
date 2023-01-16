@@ -1,12 +1,12 @@
 import connectDB from "../../middleware/db";
-import Users from "../../models/users";
+import UsersInfo from "../../models/userInfo";
 
 const handler = async (req, res) =>{
   if(req.method == "GET"){
-      const {userId} = req.query;
+      const { userId } = req.query;
 
       try {
-        const data = await Users.findById({_id:userId});
+        const data = await UsersInfo.findById({_id:userId});
         if (data) {
           res.status(200).json(data);
         }
@@ -20,10 +20,10 @@ const handler = async (req, res) =>{
   else if(req.method == "PATCH"){
 
     const _id  = req.query.userId;
-    const libraryData = req.body;
+    const libUpdate= req.body;
 
     try {
-      const result = await Users.findByIdAndUpdate(_id, libraryData);
+      const result = await UsersInfo.findByIdAndUpdate(_id, {libraryInfo:libUpdate} );
 
       if(result){
         res.status(201).json({message :"Data Saved Successfully"});

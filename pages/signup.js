@@ -3,10 +3,28 @@ import Image from "next/legacy/image";
 import { Text, Button, Loading, Tooltip } from "@nextui-org/react";
 import NextLink from "next/link";
 import validator from "validator";
+import { parseCookies } from "nookies";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
+
+export async function getServerSideProps(ctx) {
+  const { token } = parseCookies(ctx);
+
+  if (token) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        statusCode: 307,
+      },
+    };
+  }
+
+  return {
+      props: { },
+  }
+}
 
 const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -58,7 +76,7 @@ const SignUp = () => {
       fname.style.backgroundColor = "#ffd9dc";
       setErrorCount({ ...errorCount, fname: 1 });
     }
-  }, [userData.fname, errorCount]);
+  }, [userData.fname]);
 
   useEffect(() => {
     let lname = document.getElementById("lname");
@@ -88,7 +106,7 @@ const SignUp = () => {
       emailSignup.style.backgroundColor = "#dcffd6";
       setErrorCount({ ...errorCount, email: 0 });
     }
-  }, [userData.email, errorCount]);
+  }, [userData.email]);
 
   useEffect(() => {
     let passwordSignup = document.getElementById("passwordSignup");
@@ -111,7 +129,7 @@ const SignUp = () => {
       setErrorCount({ ...errorCount, password: 0 });
       setSPM(true);
     }
-  }, [userData.password, errorCount]);
+  }, [userData.password]);
 
   const saveData = async () => {
     if (errorCount.fname == 1) {

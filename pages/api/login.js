@@ -1,6 +1,5 @@
 import connectDB from "../../middleware/db";
-import Users from "../../models/users";
-import validator from "validator";
+import UsersInfo from "../../models/userInfo";
 import argon2id from "argon2";
 import jwt from "jsonwebtoken";
 
@@ -9,7 +8,7 @@ const handler = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-      const userExist = await Users.findOne({ email });
+      const userExist = await UsersInfo.findOne({ email });
 
       if (!userExist) {
         res

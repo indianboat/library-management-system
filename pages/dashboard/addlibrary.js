@@ -5,6 +5,8 @@ import { Button, Text } from "@nextui-org/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useRouter } from "next/router";
+
 export async function getServerSideProps(ctx) {
   const { token } = parseCookies(ctx);
   const token_value = jwt.decode(token);
@@ -28,25 +30,25 @@ export async function getServerSideProps(ctx) {
 }
 
 const AddLibrary = ({ data, token_value }) => {
+
+  const router = useRouter();
+
   const [liraryData, setLibraryData] = useState({
     library_type:
       data.library_type == "School Library"
         ? "School Library"
         : data.library_type,
-    librarian_name: data.librarian_name,
+    library_name: data.library_name,
     librarian_phone: data.librarian_phone,
+    libraryActive:true
   });
 
   const getLibraryData = (e) => {
     setLibraryData({ ...liraryData, [e.target.name]: e.target.value });
   };
 
-  // const [checkLibraryType, setCheckLibraryType] = useState(liraryData.library_type);
-
-  useEffect(() => {}, []);
-
   const saveLibraryData = async () => {
-    const { library_type, librarian_name, librarian_phone } = liraryData;
+    const { library_type, library_name, librarian_phone, libraryActive } = liraryData;
 
     try {
       const res = await fetch(`/api/${token_value.id}`, {
@@ -54,13 +56,18 @@ const AddLibrary = ({ data, token_value }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ library_type, librarian_name, librarian_phone }),
+        body: JSON.stringify({ library_type, library_name, librarian_phone, libraryActive }),
       });
 
       const data = await res.json();
 
       if (data.message == "Data Saved Successfully") {
-        toast.success("Data Saved Successfully");
+        toast.success("Data Saved Successfully, redirecting...");
+
+        setTimeout(() => {
+          router.push("/dashboard")
+        }, 3000);
+
       } else if (data.messgae == "Technical Error") {
         toast.error("Technical Error");
       } else {
@@ -107,16 +114,16 @@ const AddLibrary = ({ data, token_value }) => {
             </div>
 
             <div className="flex flex-col gap-y-1 border">
-              <label htmlFor="libname">Librarian Name</label>
+              <label htmlFor="libname">Library Name</label>
               <input
                 id="libname"
                 className="rounded-xl shadow-md"
                 style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
                 type="text"
-                name="librarian_name"
-                value={liraryData.librarian_name}
+                name="library_name"
+                value={liraryData.library_name}
                 onChange={getLibraryData}
-                placeholder="Librarian Name"
+                placeholder="Library Name"
                 aria-label="libr name"
                 spellCheck={false}
               />

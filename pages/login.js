@@ -2,13 +2,30 @@ import React, { useEffect, useState } from "react";
 import Image from "next/legacy/image";
 import { Text, Button, Loading, Checkbox, Tooltip } from "@nextui-org/react";
 import NextLink from "next/link";
-import { setCookie } from "nookies";
+import { setCookie, parseCookies } from "nookies";
 
 import { useRouter } from "next/router";
 import validator from "validator";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+export async function getServerSideProps(ctx) {
+  const { token } = parseCookies(ctx);
+
+  if (token) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        statusCode: 307,
+      },
+    };
+  }
+
+  return {
+      props: { },
+  }
+}
 
 const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

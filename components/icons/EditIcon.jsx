@@ -1,7 +1,7 @@
 export const EditIcon = ({ fill, size, height, width, ...props }) => {
   return (
     <svg
-      id="Iconly_Curved_Delete"
+      id="Iconly_Curved_edit"
       width={size || width || 24}
       height={size || height || 24}
       viewBox="0 0 20 20"
