@@ -18,12 +18,15 @@ const handler = async (req, res) => {
 
         if (data) {
           res.status(201).json({ message: "Sign up Success" });
+          console.log(data);
         } else {
           res.status(500).json({ message: "Server Error, try again later" });
+          console.log(data);
         }
       }
     } catch (error) {
       res.status(422).json({ message: error });
+      console.log(error);
     }
   }
 };

@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const bookSchema = new mongoose.Schema(
   {
-    library_code: String,
+    library_id: String,
     bookData: [
       {
-        bookId: { type: String, unique: true, required: true },
+        bookId: { type: String, unique: true },
         bookTitle: String,
         authorName: String,
         publisherName: String,

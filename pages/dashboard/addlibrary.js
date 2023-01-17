@@ -34,12 +34,12 @@ const AddLibrary = ({ data, token_value }) => {
   const router = useRouter();
 
   const [liraryData, setLibraryData] = useState({
-    library_type:
-      data.library_type == "School Library"
+    libraryType:
+      data.libraryType == "School Library"
         ? "School Library"
-        : data.library_type,
-    library_name: data.library_name,
-    librarian_phone: data.librarian_phone,
+        : data.libraryType,
+    libraryName: data.libraryName,
+    librarianPhone: data.librarianPhone,
     libraryActive:true
   });
 
@@ -48,7 +48,7 @@ const AddLibrary = ({ data, token_value }) => {
   };
 
   const saveLibraryData = async () => {
-    const { library_type, library_name, librarian_phone, libraryActive } = liraryData;
+    const { libraryType, libraryName, librarianPhone, libraryActive } = liraryData;
 
     try {
       const res = await fetch(`/api/${token_value.id}`, {
@@ -56,7 +56,7 @@ const AddLibrary = ({ data, token_value }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ library_type, library_name, librarian_phone, libraryActive }),
+        body: JSON.stringify({ libraryType, libraryName, librarianPhone, libraryActive }),
       });
 
       const data = await res.json();
@@ -102,8 +102,8 @@ const AddLibrary = ({ data, token_value }) => {
                 id="libtype"
                 className="rounded-xl shadow-md"
                 style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
-                name="library_type"
-                value={liraryData.library_type}
+                name="libraryType"
+                value={liraryData.libraryType}
                 onChange={getLibraryData}
                 aria-label="lib name"
               >
@@ -120,8 +120,8 @@ const AddLibrary = ({ data, token_value }) => {
                 className="rounded-xl shadow-md"
                 style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
                 type="text"
-                name="library_name"
-                value={liraryData.library_name}
+                name="libraryName"
+                value={liraryData.libraryName}
                 onChange={getLibraryData}
                 placeholder="Library Name"
                 aria-label="libr name"
@@ -135,8 +135,8 @@ const AddLibrary = ({ data, token_value }) => {
                 className="rounded-xl shadow-md"
                 style={{ padding: "8px 10px", backgroundColor: "#F1F3F5" }}
                 type="tel"
-                name="librarian_phone"
-                value={liraryData.librarian_phone}
+                name="librarianPhone"
+                value={liraryData.librarianPhone}
                 onChange={getLibraryData}
                 maxLength={10}
                 pattern="[0-9]{10}"

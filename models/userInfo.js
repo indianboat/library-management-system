@@ -4,16 +4,16 @@ const userSchema = new mongoose.Schema(
   {
     fname: String,
     lname: String,
-    email: { type: String, unique: true, required: true },
+    email:  { type:String, unique:true},
     password: String,
     accountActive: { type: Boolean, default: true },
     libraryInfo: {
       libraryActive: { type: Boolean, default: false },
-      library_code: { type: String, default: "", unique: true },
-      library_name: { type: String, default: "" },
-      library_type: { type: String, default: "" },
-      librarian_phone: { type: String, default: "" },
-      library_address: { type: String, default: "" },
+      libraryCode:String,
+      libraryName: String,
+      libraryType: String,
+      librarianPhone: String,
+      libraryAddress: String
     },
     booksInfo:{
       totalBooks:{type:Number, default:0},
@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema(
 );
 
 mongoose.models = {};
+
 const UsersInfo = mongoose.model("usersinfo", userSchema);
 
 export default UsersInfo;
