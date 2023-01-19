@@ -258,22 +258,22 @@ const NavbarBody = () => {
             <Navbar.Collapse>
               <Navbar.CollapseItem key={"home2"}>
                 <NextLink
-                  onClick={() => HandleSideMenu("/")}
+                  onClick={() => HandleSideMenu("/dashboard")}
                   color="inherit"
                   css={{ minWidth: "100%", fontWeight: "500 !important" }}
-                  href="/dashboard/home"
+                  href="/dashboard"
                 >
-                  Home
+                  Dashboard
                 </NextLink>
               </Navbar.CollapseItem>
               <Navbar.CollapseItem key={"homeadmin"}>
                 <NextLink
-                  onClick={() => HandleSideMenu("/")}
+                  onClick={() => HandleSideMenu("/dashboard/adduser")}
                   color="inherit"
                   css={{ minWidth: "100%", fontWeight: "500 !important" }}
-                  href="/dashboard#"
+                  href="/dashboard/adduser"
                 >
-                  Add School/University
+                  Add User
                 </NextLink>
               </Navbar.CollapseItem>
             </Navbar.Collapse>

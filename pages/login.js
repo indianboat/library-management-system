@@ -135,7 +135,7 @@ const Login = () => {
           toast.success("Login Success, redirecting....");
           setLoading(false);
          
-          setCookie(null, "token", data.token, { secure: process.env.NODE_ENV=="production", maxAge:60*60 });
+          setCookie(null, "token", data.token, { secure: process.env.NODE_ENV=="production", maxAge:60*60*5 });
           router.push("/dashboard");
 
         } else {

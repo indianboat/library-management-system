@@ -8,10 +8,7 @@ import {
   Text,
   Badge
 } from "@nextui-org/react";
-
-import { ShowIcon } from '../../../components/icons/ShowIcon';
-import { EditIcon } from '../../../components/icons/EditIcon';
-import { DeleteIcon } from "../../../components/icons/DeleteIcon";
+import {FiEye, FiEdit, FiTrash2} from 'react-icons/fi';
 
 const BooksTable = () => {
   const columns = [
@@ -111,20 +108,17 @@ const BooksTable = () => {
           <Row justify="center" align="center">
             <Col css={{ d: "flex" }}>
               <Tooltip content="Details">
-                <ShowIcon fill="#3e3e3e" size={18} />
-                {/* <ShowIcon onClick={() => console.log("View user", user.id)} size={20} primaryColor="#979797" /> */}
+                <FiEye className="text-gray-500" strokeWidth={1.5} size={20} />
               </Tooltip>
             </Col>
             <Col css={{ d: "flex" }}>
               <Tooltip content="Edit user">
-                <EditIcon fill="#3e3e3e" size={18} />
-                {/* <Edit onClick={() => console.log("Edit user", user.id)} size={20} primaryColor="#979797" /> */}
+                <FiEdit className="text-gray-500" strokeWidth={1.5} size={20} />
               </Tooltip>
             </Col>
             <Col css={{ d: "flex" }}>
               <Tooltip content="Delete user" color="error">
-                <DeleteIcon fill="#ad0345" size={18} />
-                {/* <Delete  onClick={() => console.log("Delete user", user.id)} size={20} primaryColor="#FF0080" /> */}
+                <FiTrash2 className="text-rose-500" strokeWidth={1.5} size={20} />
               </Tooltip>
             </Col>
           </Row>
