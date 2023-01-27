@@ -8,7 +8,8 @@ import {
   FiFileMinus,
   FiCornerRightDown,
   FiSettings,
-  FiUserPlus
+  FiUserPlus,
+  FiBook
 } from "react-icons/fi";
 import { useRouter } from "next/router";
 
@@ -33,7 +34,7 @@ const SideMenu = (props) => {
             </Text>
             <Text
               size={12}
-              className="text-center font-Inter tracking-normal font-thin text-[#aabac8]"
+              className="text-center font-Inter tracking-normal font-medium text-[#aabac8]"
             >
               iampankaj@gmail.com
             </Text>
@@ -74,6 +75,15 @@ const SideMenu = (props) => {
             >
               <FiCornerRightDown strokeWidth={1.5} size={24} />
               Return Book
+            </NextLink>
+          </li>
+          <li className="flex justify-start w-full align-middle">
+            <NextLink
+              className={`flex rounded-2xl md:text-base py-3 mx-6 px-4 hover:bg-[#5c7890] hover:text-white justify-start gap-x-3 w-full transition-colors  ${router.pathname == '/dashboard/addbook' ? "bg-[#5c7890] text-white" : "text-[#aabac8]"}`}
+              href="/dashboard/addbook"
+            >
+              <FiBook strokeWidth={1.5} size={24} />
+              Add Book
             </NextLink>
           </li>
           <li className="flex justify-start w-full align-middle">

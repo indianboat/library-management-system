@@ -21,22 +21,21 @@ export async function getServerSideProps(ctx) {
       },
     };
   } else {
-    const res = await fetch(`http://localhost:3000/api/${token_value.id}`);
-    // const res = await fetch(`https://amrita-lms.vercel.app/api/${token_value.id}`);
+    // const res = await fetch(`http://localhost:3000/api/${token_value.id}`);
+    const res = await fetch(`https://amrita-lms.vercel.app/api/${token_value.id}`);
     const data = await res.json();
     return {
-      props: { data },
+      props: { data, token },
     };
   }
 }
 
-const DashboardHome = ({ data }) => {
+const DashboardHome = ({ data, token }) => {
 
   const [libActive, setLibActive] = useState(data.libraryInfo.libraryActive);
 
   const numberArr = [data.booksInfo.totalBooks, data.booksInfo.issuedBooks, data.booksInfo.returnedBooks, data.booksInfo.availableBooks];
 
-  console.log(numberArr);
   const totalBooks = Intl.NumberFormat("en-IN").format(numberArr[0]);
   const issuedBooks = Intl.NumberFormat("en-IN").format(numberArr[1]);
   const returnedBooks = Intl.NumberFormat("en-IN").format(numberArr[2]);

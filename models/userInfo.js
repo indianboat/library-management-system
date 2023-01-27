@@ -4,12 +4,12 @@ const userSchema = new mongoose.Schema(
   {
     fname: String,
     lname: String,
-    email:  { type:String, unique:true},
+    email:  { type:String, unique:true, },
     password: String,
     accountActive: { type: Boolean, default: true },
     libraryInfo: {
       libraryActive: { type: Boolean, default: false },
-      libraryCode:String,
+      libraryId:String,
       libraryName: String,
       libraryType: String,
       librarianPhone: String,
@@ -20,13 +20,51 @@ const userSchema = new mongoose.Schema(
       issuedBooks:{type:Number, default:0},
       returnedBooks:{type:Number, default:0},
       availableBooks:{type:Number, default:0},
-    }
+    },
+    usersList:[
+      {
+        userType:String,
+        userIdProof:String,
+        userIdNumber:String,
+        userFullName:String,
+        userEmailId:String,
+        userMobilePhone:String,
+        userAddress:String,
+        userCourseName:String,
+        userClassName:String,
+        userEducation:String,
+        userSchoolName:String,
+        userSchoolStandard:String,
+        userCollegeName:String,
+        userGender:String,
+        userDOB:Date,
+        userBatch:String,
+        userGender:String,
+        userSection:String
+      }
+    ]
   },
   { timestamps: true }
 );
 
-mongoose.models = {};
 
+
+userSchema.methods.addUser = async function(userData){
+
+  console.log(userData);
+
+  try{
+    this.usersList = this.usersList.concat(userData);
+    await this.save();
+    return this.usersList;
+  }
+  catch(error){
+    console.log(error);
+  }
+}
+
+
+mongoose.models = {};
 const UsersInfo = mongoose.model("usersinfo", userSchema);
 
 export default UsersInfo;

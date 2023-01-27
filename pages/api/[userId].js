@@ -20,7 +20,7 @@ const handler = async (req, res) =>{
   else if(req.method == "PATCH"){
 
     const _id  = req.query.userId;
-    const libUpdate= req.body;
+    const libUpdate = req.body;
 
     try {
       const result = await UsersInfo.findByIdAndUpdate(_id, {libraryInfo:libUpdate} );

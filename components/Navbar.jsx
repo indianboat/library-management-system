@@ -126,16 +126,15 @@ const NavbarBody = () => {
                       <Avatar bordered size="md" as="button" src="/user.png" />
                     </Dropdown.Trigger>
                     <Dropdown.Menu color="default" aria-label="Avatar Actions">
-                      <Dropdown.Item key="profile" css={{ height: "$14" }} textValue="welcome">
+                      {/* <Dropdown.Item key="profile" css={{ height: "$14" }} textValue="welcome">
                         <Text b color="inherit" className="font-Inter" css={{ d: "flex" }}>
                           {`Welcome ${firstName} ${lastName}`}
                         </Text>
-                      </Dropdown.Item>
+                      </Dropdown.Item> */}
                       <Dropdown.Item
                         className="px-0"
                         key="homepage"
                         textValue="homepage"
-                        withDivider
                       >
                         <NextLink
                           style={{

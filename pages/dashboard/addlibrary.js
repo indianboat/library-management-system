@@ -34,12 +34,9 @@ const AddLibrary = ({ data, token_value }) => {
   const router = useRouter();
 
   const [liraryData, setLibraryData] = useState({
-    libraryType:
-      data.libraryType == "School Library"
-        ? "School Library"
-        : data.libraryType,
-    libraryName: data.libraryName,
-    librarianPhone: data.librarianPhone,
+    libraryType:"school",
+    libraryName:"",
+    librarianPhone:"",
     libraryActive:true
   });
 
@@ -74,7 +71,7 @@ const AddLibrary = ({ data, token_value }) => {
         toast.error("Server Error, Please try again...");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Server Error : ", error);
     }
   };
 
@@ -107,9 +104,9 @@ const AddLibrary = ({ data, token_value }) => {
                 onChange={getLibraryData}
                 aria-label="lib name"
               >
-                <option value="School">School Library</option>
-                <option value="University">University Library</option>
-                <option value="Open Library">Open Library</option>
+                <option value="school">School</option>
+                <option value="university">University</option>
+                <option value="public">Public</option>
               </select>
             </div>
 
