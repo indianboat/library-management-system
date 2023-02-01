@@ -3,23 +3,34 @@ import mongoose from "mongoose";
 const bookSchema = new mongoose.Schema(
   {
     library_id: String,
-    bookData: [
+    bookList: [
       {
-        bookId: { type: String, unique: true },
+        bookId: { type: Number, unique: true },
+        bookGenre:String,
         bookTitle: String,
         authorName: String,
-        quantity: Number,
+        bookQuantity: Number,
         publisherName: String,
         publishDate: String,
         totalPages: Number,
-        edition: String,
-        rating: Number,
-        summary: String,
-      },
-    ],
+        bookPrice:Number
+      }
+    ]
   },
   { timestamps: true }
 );
+
+
+bookSchema.methods.addBook = async function(bookData){
+  try{
+    this.bookList = this.bookList.concat(bookData);
+    await this.save();
+    return this.bookList;
+  }
+  catch(error){
+    console.log(error);
+  }
+}
 
 mongoose.models = {}; // solution -> if get error: Cannot overwrite User model once compiled. at Mongoose.model
 

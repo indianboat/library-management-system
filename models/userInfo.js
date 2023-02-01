@@ -50,9 +50,6 @@ const userSchema = new mongoose.Schema(
 
 
 userSchema.methods.addUser = async function(userData){
-
-  console.log(userData);
-
   try{
     this.usersList = this.usersList.concat(userData);
     await this.save();
