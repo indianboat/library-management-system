@@ -11,7 +11,7 @@ const handler = async (req, res) =>{
           res.status(200).json(data);
         }
         else {
-          res.status(500).json({ message: "Technical Error, try again later" });
+          res.status(500).json({ message: "Data not available" });
         }
       } catch (error) {
         res.status(500).json({messgae:"Server Error, Please try again..."})

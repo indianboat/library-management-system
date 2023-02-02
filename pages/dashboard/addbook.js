@@ -37,6 +37,8 @@ const AddBook = ({ data, token }) => {
 
   const libId = data.libraryInfo.libraryId;
 
+
+
   const bookGenreList = [
     "Education & Teaching",
     "Fantasy",
@@ -147,34 +149,45 @@ const AddBook = ({ data, token }) => {
     }
   };
 
-
-
   // new library id creation code
 
   const [newLibId, setNewLibId] = useState("");
+  // const [loading, setLoding] = useState(false);
+  // const [disabledBtn, setDisabledBtn] = useState(true);
 
-  const getNewLibId = (e) =>{
-    setNewLibId(e.target.value);
-  }
+  const getNewLibId = async (e) => {
+    setNewLibId(e.target.value.toUpperCase());
+  };
 
-  const checkAvailability = async () => {
+  
+
+  const updateLibId = async () => {
+
     try {
-      const res = await fetch("/api/allusers", {
-        method:"get",
-        headers:{
-          "Content-Type":"application/json"
-        }
+      const res = await fetch(`/api/books/${user_id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body:JSON.stringify({newLibId})
       });
 
-      
+      const data = await res.json();
+      // console.log(data);
 
-
-
+      if (data.message == "Data Saved Successfully") {
+        toast.success("Data Saved Successfully");
+        // setLoding(false);
+        // setDisabledBtn(false);
+      } else {
+        toast.error("Technical Error");
+        // setLoding(false);
+        // setDisabledBtn(true);
+      }
     } catch (error) {
       toast.error(error);
     }
-  }
-
+  };
 
   return (
     <>
@@ -197,24 +210,42 @@ const AddBook = ({ data, token }) => {
               {libId == undefined ? (
                 <>
                   <div className="border border-blue-500">
-                    <Text size={16} className="md:text-left sm:text-center text-center font-Inter">Please create a new Store for your books.</Text>
-                    <form method="post" className="border mt-6">
-                      <div className="flex place-items-center">
+                    <Text
+                      size={16}
+                      className="md:text-left sm:text-center text-center font-Inter"
+                    >
+                      Please create a new Store for your books.
+                    </Text>
+                    <form method="post" className="border mt-6 flex">
                       <div className="flex flex-col">
-                        <label htmlFor="newlibId" className="text-sm">
-                          Create Library Id
-                        </label>
-                        <input
-                          type="text"
-                          name="newLibId"
-                          id="newlibId"
-                          value={newLibId.toUpperCase()}
-                          placeholder="Ex. MYLIBRARY123456"
-                          onChange={getNewLibId}
-                          className="rounded-xl px-2 py-2 border-2 border-rose-200 appearance-none"
-                        />
-                      </div>
-                        <Button onClick={checkAvailability} size="sm" auto className="bg-gray-500">Check Availability</Button>
+                        <div className="flex flex-col">
+                          <label htmlFor="newlibId" className="text-sm">
+                            Create Library Id
+                          </label>
+                         <input
+                            type="text"
+                            name="newLibId"
+                            id="newlibId"
+                            minLength={6}
+                            maxLength={25}
+                            value={newLibId}
+                            placeholder="Eg MYLIBRARY758495"
+                            onChange={getNewLibId}
+                            className="rounded-xl px-2 py-2 border-2 border-rose-200 appearance-none"
+                          />
+                        </div>
+                        <div className="">
+                          <p id="avai"></p>
+                        </div>
+                        <div className="flex flex-row gap-x-3 w-auto">
+                          <Button
+                            size="sm"
+                            onClick={updateLibId}
+                            className="bg-gray-900"
+                          >
+                            Create
+                          </Button>
+                        </div>
                       </div>
                     </form>
                   </div>
