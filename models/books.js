@@ -5,7 +5,7 @@ const bookSchema = new mongoose.Schema(
     library_id: String,
     bookList: [
       {
-        bookId: { type: Number, unique: true },
+        bookId:Number,
         bookGenre:String,
         bookTitle: String,
         authorName: String,
@@ -19,6 +19,7 @@ const bookSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 
 
 bookSchema.methods.addBook = async function(bookData){

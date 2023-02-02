@@ -1,35 +1,38 @@
-import connectDB from "../../middleware/db";
-import BooksData from "../../models/books";
+import connectDB from "../../../middleware/db";
+import BooksData from "../../../models/books";
+
 
 const handler = async (req, res) =>{
  
   if(req.method == "POST"){
 
-    const bookData = req.body;
+    const bookInfo = req.body;
 
     const newBookData = {
-      "bookId":bookData.bookId, 
-      "bookGenre":bookData.bookGenre, 
-      "bookTitle":bookData.bookTitle,
-      "bookQuantity":bookData.bookQuantity,
-      "authorName" : bookData.authorName,
-      "publisherName":bookData.publisherName,
-      "publishDate":bookData.publishDate,
-      "totalPages":bookData.totalPages,
-      "bookPrice":bookData.bookPrice
+      "bookId":bookInfo.bookId, 
+      "bookGenre":bookInfo.bookGenre, 
+      "bookTitle":bookInfo.bookTitle,
+      "bookQuantity":bookInfo.bookQuantity,
+      "authorName" : bookInfo.authorName,
+      "publisherName":bookInfo.publisherName,
+      "publishDate":bookInfo.publishDate,
+      "totalPages":bookInfo.totalPages,
+      "bookPrice":bookInfo.bookPrice
     }
 
-    if(bookData.bookId == "" || bookData.bookTitle == "" || bookData.authorName == "" || bookData.totalPages=="" || bookData.bookPrice ==""){
+
+    if(bookInfo.bookId == "" || bookInfo.bookTitle == "" || bookInfo.authorName == "" || bookInfo.totalPages== "" || bookInfo.bookPrice == ""){
       res.status(400).json({message :"Required fields !"});
     }
 
     else{
+
       try {
-        const libExist = await BooksData.findOne({library_id:bookData.libId});
-       
+        const libExist = await BooksData.findOne({library_id:bookInfo.libId});
+
         if(libExist==null){
-          console.log("if", newBookData);
-          const newBook = new BooksData({library_id:bookData.libId, bookList:newBookData});
+
+          const newBook = new BooksData({library_id:bookInfo.libId, bookList:newBookData});
           const data = await newBook.save();
 
           if(data){
@@ -40,10 +43,10 @@ const handler = async (req, res) =>{
           }
         }
         else{
-          console.log("else", newBookData);
+
           await libExist.addBook(newBookData);
           const result = await libExist.save();
-  
+
           if(result){
             res.status(201).json({message :"success"});
           }
@@ -54,6 +57,7 @@ const handler = async (req, res) =>{
   
       } 
       catch (error) {
+        // console.log(error);
         res.status(500).json({messgae:"Server Error, Please try again...", err:error})
       }
     }

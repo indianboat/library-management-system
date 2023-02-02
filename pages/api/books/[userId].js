@@ -16,9 +16,7 @@ const handler = async (req, res) =>{
       }
       else {
         res.status(400).json({message :"Technical Error"});
-      }
-
-      
+      }      
     } catch (error) {
       res.status(500).json({messgae:"Server Error, Please try again..."}) 
     }

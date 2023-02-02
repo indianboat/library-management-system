@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import HeaderBox from "./components/HeaderBox";
 import SideMenu from "./components/SideMenu";
 import { parseCookies } from "nookies";
@@ -20,8 +20,8 @@ export async function getServerSideProps(ctx) {
       },
     };
   } else {
-    const res = await fetch(`http://localhost:3000/api/${token_value.id}`);
-    // const res = await fetch(`https://amrita-lms.vercel.app/api/${token_value.id}`);
+    // const res = await fetch(`http://localhost:3000/api/${token_value.id}`);
+    const res = await fetch(`https://amrita-lms.vercel.app/api/${token_value.id}`);
     const data = await res.json();
 
     return {
@@ -31,13 +31,12 @@ export async function getServerSideProps(ctx) {
 }
 
 const AddBook = ({ data, token }) => {
+
   const user_id = jwt.decode(token).id;
   const fName = jwt.decode(token).user_first_name;
   const lName = jwt.decode(token).user_last_name;
 
   const libId = data.libraryInfo.libraryId;
-
-
 
   const bookGenreList = [
     "Education & Teaching",
@@ -85,7 +84,6 @@ const AddBook = ({ data, token }) => {
   let today = `${y}-${m}-${d}`;
 
   const [bookData, setBookData] = useState({
-    libId: libId,
     bookId: "",
     bookGenre: "Education & Teaching",
     bookTitle: "",
@@ -102,8 +100,8 @@ const AddBook = ({ data, token }) => {
   };
 
   const saveBookData = async () => {
+
     const {
-      libId,
       bookId,
       bookGenre,
       bookTitle,
@@ -116,8 +114,8 @@ const AddBook = ({ data, token }) => {
     } = bookData;
 
     try {
-      const res = await fetch("/api/addbook", {
-        method: "post",
+      const res = await fetch("/api/books/addbook", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -141,6 +139,8 @@ const AddBook = ({ data, token }) => {
         toast.success("Book Added Successfully !");
       } else if (data.message == "Technical Error") {
         toast.error("Technical Error");
+      } else if (data.message == "Required fields !") {
+        toast.error("Required fields !");
       } else {
         toast.error("Server Error");
       }
