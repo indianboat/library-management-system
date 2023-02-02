@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
-const bookSchema = new mongoose.Schema(
+const booksSchema = new mongoose.Schema(
   {
     library_id: String,
     bookList: [
       {
-        bookId:Number,
+        bookId:{ type:Number, unique:true },
         bookGenre:String,
         bookTitle: String,
         authorName: String,
@@ -21,8 +21,7 @@ const bookSchema = new mongoose.Schema(
 );
 
 
-
-bookSchema.methods.addBook = async function(bookData){
+booksSchema.methods.addBook = async function(bookData){
   try{
     this.bookList = this.bookList.concat(bookData);
     await this.save();
@@ -33,11 +32,13 @@ bookSchema.methods.addBook = async function(bookData){
   }
 }
 
+
+
 mongoose.models = {}; // solution -> if get error: Cannot overwrite User model once compiled. at Mongoose.model
 
-const BooksData = mongoose.model("booksdata", bookSchema);
+const Book = mongoose.model("books", booksSchema);
 
-export default BooksData;
+export default Book;
 
 // On changes in any JS file other than the models gives error: Cannot overwriteUsermodel once compiled. at Mongoose.model next js since during hot reload as there are no changes in the model file so the previously compiled one is used (cached).
 // In case someone is facing such issue can fix this in following way:

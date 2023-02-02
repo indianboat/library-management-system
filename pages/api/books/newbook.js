@@ -1,10 +1,8 @@
 import connectDB from "../../../middleware/db";
-import BooksData from "../../../models/books";
+import Book from "../../../models/newbookmodel";
 
-
-const handler = async (req, res) =>{
- 
-  if(req.method == "POST"){
+const handler = async (req, res) => {
+  if (req.method == "POST") {
 
     const bookInfo = req.body;
 
@@ -20,21 +18,20 @@ const handler = async (req, res) =>{
       "bookPrice":bookInfo.bookPrice
     }
 
-
     if(bookInfo.bookId == "" || bookInfo.bookTitle == "" || bookInfo.authorName == "" || bookInfo.totalPages== "" || bookInfo.bookPrice == ""){
       res.status(400).json({message :"Required fields !"});
     }
 
     else{
-
       try {
-        const libExist = await BooksData.findOne({library_id:bookInfo.libId});
+        const libExist = await Book.findOne({ library_id: bookInfo.libId });
+
 
         if(libExist==null){
-
-          const newBook = new BooksData({library_id:bookInfo.libId, bookList:newBookData});
+          const newBook = new Book({library_id:bookInfo.libId, bookList:newBookData});
+  
           const data = await newBook.save();
-
+  
           if(data){
             res.status(201).json({message :"success"});
           }
@@ -43,7 +40,6 @@ const handler = async (req, res) =>{
           }
         }
         else{
-
           await libExist.addBook(newBookData);
           const result = await libExist.save();
 
@@ -55,15 +51,11 @@ const handler = async (req, res) =>{
           }
         }
   
-      } 
-      catch (error) {
-        // console.log(error);
-        res.status(500).json({messgae:"Server Error, Please try again...", err:error})
+      } catch (error) {
+        res.status(500).json({ messgae: "Server Error, Please try again...", err: error });
       }
     }
-
-
   }
-}
+};
 
 export default connectDB(handler);

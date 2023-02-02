@@ -114,13 +114,12 @@ const AddBook = ({ data, token }) => {
     } = bookData;
 
     try {
-      const res = await fetch("/api/books/addbook", {
+      const res = await fetch("/api/books/newbook", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          libId,
           bookId,
           bookGenre,
           bookTitle,
@@ -130,6 +129,7 @@ const AddBook = ({ data, token }) => {
           totalPages,
           bookPrice,
           bookQuantity,
+          libId
         }),
       });
 
