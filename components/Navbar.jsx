@@ -255,7 +255,7 @@ const NavbarBody = () => {
         ) : (
           <>
             <Navbar.Collapse>
-              <Navbar.CollapseItem key={"home2"}>
+              <Navbar.CollapseItem key={"home"}>
                 <NextLink
                   onClick={() => HandleSideMenu("/dashboard")}
                   color="inherit"
@@ -265,7 +265,7 @@ const NavbarBody = () => {
                   Dashboard
                 </NextLink>
               </Navbar.CollapseItem>
-              <Navbar.CollapseItem key={"homeadmin"}>
+              <Navbar.CollapseItem key={"adduser"}>
                 <NextLink
                   onClick={() => HandleSideMenu("/dashboard/adduser")}
                   color="inherit"
@@ -273,6 +273,46 @@ const NavbarBody = () => {
                   href="/dashboard/adduser"
                 >
                   Add User
+                </NextLink>
+              </Navbar.CollapseItem>
+              <Navbar.CollapseItem key={"issuebook"}>
+                <NextLink
+                  onClick={() => HandleSideMenu("/dashboard")}
+                  color="inherit"
+                  css={{ minWidth: "100%", fontWeight: "500 !important" }}
+                  href="/dashboard"
+                >
+                  Issue Book
+                </NextLink>
+              </Navbar.CollapseItem>
+              <Navbar.CollapseItem key={"returnbook"}>
+                <NextLink
+                  onClick={() => HandleSideMenu("/dashboard")}
+                  color="inherit"
+                  css={{ minWidth: "100%", fontWeight: "500 !important" }}
+                  href="/dashboard"
+                >
+                  Return Book
+                </NextLink>
+              </Navbar.CollapseItem>
+              <Navbar.CollapseItem key={"addbook"}>
+                <NextLink
+                  onClick={() => HandleSideMenu("/dashboard/addbook")}
+                  color="inherit"
+                  css={{ minWidth: "100%", fontWeight: "500 !important" }}
+                  href="/dashboard/addbook"
+                >
+                  Add Book
+                </NextLink>
+              </Navbar.CollapseItem>
+              <Navbar.CollapseItem key={"setting"}>
+                <NextLink
+                  onClick={() => HandleSideMenu("/dashboard")}
+                  color="inherit"
+                  css={{ minWidth: "100%", fontWeight: "500 !important" }}
+                  href="/dashboard"
+                >
+                  Setting
                 </NextLink>
               </Navbar.CollapseItem>
             </Navbar.Collapse>
