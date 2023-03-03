@@ -76,7 +76,7 @@ const SignUp = () => {
       fname.style.backgroundColor = "#ffd9dc";
       setErrorCount({ ...errorCount, fname: 1 });
     }
-  }, [userData.fname]);
+  }, [userData.fname, errorCount]);
 
   useEffect(() => {
     let lname = document.getElementById("lname");
@@ -106,7 +106,7 @@ const SignUp = () => {
       emailSignup.style.backgroundColor = "#dcffd6";
       setErrorCount({ ...errorCount, email: 0 });
     }
-  }, [userData.email]);
+  }, [userData.email, errorCount]);
 
   useEffect(() => {
     let passwordSignup = document.getElementById("passwordSignup");
@@ -129,7 +129,7 @@ const SignUp = () => {
       setErrorCount({ ...errorCount, password: 0 });
       setSPM(true);
     }
-  }, [userData.password]);
+  }, [userData.password, errorCount]);
 
   const saveData = async () => {
     if (errorCount.fname == 1) {

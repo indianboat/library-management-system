@@ -20,8 +20,7 @@ export async function getServerSideProps(ctx) {
       },
     };
   } else {
-    // const res = await fetch(`http://localhost:3000/api/${token_value.id}`);
-    const res = await fetch(`https://amrita-lms.vercel.app/api/${token_value.id}`);
+    const res = await fetch(process.env.NODE_ENV == "production" ? `${process.env.production}/api/users/${token_value.id}` : `${process.env.local}/api/users/${token_value.id}`);
     const data = await res.json();
 
     return {
@@ -198,7 +197,7 @@ const AddBook = ({ data, token }) => {
         theme={"light"}
       />
       <div className="2xl:container flex mx-auto">
-        <SideMenu userFirstName={fName} userLastName={lName} />
+        <SideMenu userFirstName={fName} userLastName={lName} libId={libId}/>
         <div className="w-full py-3 px-3 bg-[#ebf0fa]">
           <HeaderBox pageName="Add Book" />
 

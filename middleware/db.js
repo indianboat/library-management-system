@@ -7,7 +7,7 @@ const connectDB = handler => async (req, res) => {
     return handler(req, res);
   }
 
-  mongoose.connect(process.env.mongodb_uri, { useUnifiedTopology: true, useNewUrlParser: true });
+  mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
 
   return handler(req, res);
 };

@@ -1,5 +1,5 @@
-import connectDB from "../../middleware/db";
-import UsersInfo from "../../models/userInfo";
+import connectDB from "../../../middleware/db";
+import UsersInfo from "../../../models/userInfo";
 
 const handler = async (req, res) => {
   if (req.method == "GET") {

@@ -40,7 +40,8 @@ const userSchema = new mongoose.Schema(
         userDOB:Date,
         userBatch:String,
         userGender:String,
-        userSection:String
+        userSection:String,
+        userNumOfIssued:{type:Number, default:0}
       }
     ]
   },

@@ -105,6 +105,7 @@ const Login = () => {
   
 
   const saveData = async () => {
+
     if (emailErrorCount == 1) {
       emailInput.style.backgroundColor = "#ffd9dc";
     } else if (passwordErrorCount == 1){
@@ -231,6 +232,7 @@ const Login = () => {
                 </div>
 
                 <Button
+                  type="button"
                   className="z-0 w-full"
                   onClick={saveData}
                   css={{ backgroundColor: "$accents9 !important" }}

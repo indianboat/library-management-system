@@ -36,7 +36,7 @@ const SideMenu = (props) => {
               size={12}
               className="text-center font-Inter tracking-normal font-medium text-[#aabac8]"
             >
-              iampankaj@gmail.com
+              {props.libId}
             </Text>
           </div>
         </div>
@@ -62,7 +62,7 @@ const SideMenu = (props) => {
           <li className="flex justify-start w-full align-middle">
             <NextLink
               className={`flex rounded-2xl md:text-base py-3 mx-6 px-4 hover:bg-[#5c7890] hover:text-white justify-start gap-x-3 w-full transition-colors  ${router.pathname == '/dashboard/issuebook' ? "bg-[#5c7890] text-white" : "text-[#aabac8]"}`}
-              href="/dashboard"
+              href="/dashboard/issuebook"
             >
               <FiFileMinus strokeWidth={1.5} size={24} />
               Issue Book

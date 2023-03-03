@@ -1,12 +1,12 @@
-import connectDB from "../../middleware/db";
-import UsersInfo from "../../models/userInfo";
+import connectDB from "../../../middleware/db";
+import UsersInfo from "../../../models/userInfo";
 
 const handler = async (req, res) =>{
   if(req.method == "GET"){
-      const { userId } = req.query;
+      const { userid } = req.query;
 
       try {
-        const data = await UsersInfo.findById({_id:userId});
+        const data = await UsersInfo.findById({_id:userid});
         if (data) {
           res.status(200).json(data);
         }
@@ -31,8 +31,6 @@ const handler = async (req, res) =>{
       else {
         res.status(400).json({message :"Technical Error"});
       }
-
-
 
     } catch (error) {
       res.status(500).json({messgae:"Server Error, Please try again..."})

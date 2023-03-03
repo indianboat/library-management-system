@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       <NextUIProvider>
         <Layout>
-          <Component {...pageProps} />
+            <Component {...pageProps} />
         </Layout>
       </NextUIProvider>
     </>

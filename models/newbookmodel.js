@@ -13,7 +13,10 @@ const booksSchema = new mongoose.Schema(
         publisherName: String,
         publishDate: String,
         totalPages: Number,
-        bookPrice:Number
+        bookPrice:Number,
+        bookAvailable:{type:Boolean, default:true},
+        outOfStock:{type:Boolean, default:false},
+        bookIssued:{type:Boolean, default:false}
       }
     ]
   },

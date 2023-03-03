@@ -19,8 +19,7 @@ export async function getServerSideProps(ctx) {
       },
     };
   } else {
-    // const res = await fetch(`http://localhost:3000/api/${token_value.id}`);
-    const res = await fetch(`https://amrita-lms.vercel.app/api/${token_value.id}`);
+    const res = await fetch(process.env.NODE_ENV == "production" ? `${process.env.production}/api/users/${token_value.id}` : `${process.env.local}/api/users/${token_value.id}`);
     const data = await res.json();
 
     return {
@@ -48,7 +47,7 @@ const AddLibrary = ({ data, token_value }) => {
     const { libraryType, libraryName, librarianPhone, libraryActive } = liraryData;
 
     try {
-      const res = await fetch(`/api/${token_value.id}`, {
+      const res = await fetch(`/api/users/${token_value.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
