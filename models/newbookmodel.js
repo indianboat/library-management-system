@@ -16,7 +16,7 @@ const booksSchema = new mongoose.Schema(
         bookPrice:Number,
         bookAvailable:{type:Boolean, default:true},
         outOfStock:{type:Boolean, default:false},
-        bookIssued:{type:Boolean, default:false}
+        // bookIssued:{type:Boolean, default:false}
       }
     ]
   },

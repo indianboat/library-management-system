@@ -41,7 +41,8 @@ const userSchema = new mongoose.Schema(
         userBatch:String,
         userGender:String,
         userSection:String,
-        userNumOfIssued:{type:Number, default:0}
+        numOfIssued:{type: Number, default: 0 },
+        bookIssuedList:[{ bookId:Number }]
       }
     ]
   },

@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import jwt from "jsonwebtoken";
 import { parseCookies } from "nookies";
-// import BooksTable from "./components/BooksTable";
 import NextLink from "next/link";
 import SideMenu from "./components/SideMenu";
-
 import DashBox from "./components/DashBox";
 import HeaderBox from "./components/HeaderBox";
-
 
 export async function getServerSideProps(ctx) {
   const { token } = parseCookies(ctx);
