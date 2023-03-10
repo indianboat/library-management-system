@@ -1,15 +1,17 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { parseCookies } from "nookies";
 import jwt from "jsonwebtoken";
 import SideMenu from "../../components/SideMenu";
 import HeaderBox from "../../components/HeaderBox";
 import useSWR from "swr";
 import { useFormik } from "formik";
+import atob from "atob";
+import btoa from "btoa";
 
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Table, Row, Text } from "@nextui-org/react";
+import { Table, Row, Text, Badge } from "@nextui-org/react";
 import NextLink from "next/link";
 
 export async function getServerSideProps(ctx) {
@@ -30,29 +32,39 @@ export async function getServerSideProps(ctx) {
 }
 
 const IssueById = ({ token }) => {
+
   const router = useRouter();
+  const libraryId = atob(router.query.library);
+  const uid = atob(router.query.userid);
+
   const userid = jwt.decode(token).id;
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data, error, isLoading } = useSWR(`/api/users/${userid}`, fetcher);
-  const { data: books, isLoading: booksLoading } = useSWR(
-    "/api/books/AMRITALIB0001",
-    fetcher
-  );
+  const { data, isLoading } = useSWR(`/api/users/${userid}`, fetcher);
+  const { data: books, error, isLoading: booksLoading } = useSWR(`/api/librarydata/${libraryId}`,fetcher );
 
   let user = [];
+  let allBooks = [];
 
   if (!isLoading) {
     for (let i = 0; i < data.usersList.length; i++) {
       const element = data.usersList[i];
-      if (router.query.userid == element._id) {
+      if (uid == element._id) {
         user.push(element);
       }
     }
   }
 
-  // console.log(books);
-  // const allBooks = books.bookList;
+  if(!booksLoading){
+
+    const libId = books.library_id;
+    if(atob(router.query.library) === libId){
+      for (let i = 0; i < books.bookList.length; i++) {
+        const element = books.bookList[i];
+        allBooks.push(element);
+      }
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -87,7 +99,7 @@ const IssueById = ({ token }) => {
                   <Skeleton baseColor="#ECF1FA" height={20} width={120} />
                 )}
               </h1>
-              <div className="border mt-4">
+              <div className="mt-4">
                 <form method="post" onSubmit={formik.handleSubmit}>
                   <div className="">
                     <div className="flex flex-col md:w-fit sm:w-full">
@@ -105,7 +117,9 @@ const IssueById = ({ token }) => {
                       />
                     </div>
                     <div className="flex flex-col mt-4">
-                      <Table
+                      {
+                        isLoading ? <Skeleton count={5}/>
+                      : <Table
                         className="border-0"
                         aria-label="books-data"
                         css={{
@@ -125,74 +139,72 @@ const IssueById = ({ token }) => {
                           )}
                         </Table.Header>
                         <Table.Body>
-                          {booksLoading
-                            ? "Loading Please Wait"
-                            : books.bookList
-                                .filter((bookname) => {
-                                  if (formik.values.bookQuery === "")
-                                    return bookname;
-                                  else if (
-                                    bookname.bookTitle
-                                      .toLowerCase()
-                                      .includes(
-                                        formik.values.bookQuery.toLowerCase()
-                                      ) ||
-                                    bookname.bookId
-                                      .toString()
-                                      .includes(
-                                        formik.values.bookQuery.toString()
-                                      ) ||
-                                    bookname.authorName
-                                      .toLowerCase()
-                                      .includes(
-                                        formik.values.bookQuery.toLowerCase()
-                                      )
-                                  ) {
-                                    return bookname;
-                                  }
-                                })
-                                .map((val, key) => {
-                                  return (
-                                    <Table.Row
-                                      key={key}
-                                      className="select-none"
+                          {
+                            allBooks.filter((bookname) => {
+                              if (formik.values.bookQuery === "")
+                                return bookname;
+                              else if (
+                                bookname.bookTitle
+                                  .toLowerCase()
+                                  .includes(
+                                    formik.values.bookQuery.toLowerCase()
+                                  ) ||
+                                bookname.bookId
+                                  .toString()
+                                  .includes(
+                                    formik.values.bookQuery.toString()
+                                  ) ||
+                                bookname.authorName
+                                  .toLowerCase()
+                                  .includes(
+                                    formik.values.bookQuery.toLowerCase()
+                                  )
+                              ) {
+                                return bookname;
+                              }
+                            })
+                            .map((val, key) => {
+                              return (
+                                <Table.Row key={key} className="select-none">
+                                  <Table.Cell>
+                                    <Row>
+                                      <Text
+                                        b
+                                        size={14}
+                                        css={{ tt: "capitalize" }}
+                                        className="select-none"
+                                      >
+                                        {val.bookId}
+                                      </Text>
+                                    </Row>
+                                  </Table.Cell>
+                                  <Table.Cell>{val.bookTitle}</Table.Cell>
+                                  <Table.Cell>{val.authorName}</Table.Cell>
+                                  <Table.Cell>
+                                    {val.outOfStock == false ? (
+                                      <Badge color="success" variant="flat">
+                                        Available
+                                      </Badge>
+                                    ) : (
+                                      <Badge color="error" variant="flat">Out of Stock</Badge>
+                                    )}
+                                  </Table.Cell>
+                                  <Table.Cell>
+                                    <NextLink
+                                      className="px-2 py-1 rounded-md bg-slate-400 text-slate-200"
+                                      href={{ pathname: `/dashboard/issuebook/${router.query.userid}/bookdata`, 
+                                      query: {bookid : btoa(val.bookId), library: router.query.library } 
+                                    }}
                                     >
-                                      <Table.Cell>
-                                        <Row>
-                                          <Text
-                                            b
-                                            size={14}
-                                            css={{ tt: "capitalize" }}
-                                            className="select-none"
-                                          >
-                                            {val.bookId}
-                                          </Text>
-                                        </Row>
-                                      </Table.Cell>
-                                      <Table.Cell>{val.bookTitle}</Table.Cell>
-                                      <Table.Cell>{val.authorName}</Table.Cell>
-                                      <Table.Cell>
-                                        {val.outOfStock == false ? (
-                                          <span className="text-green-500">
-                                            Available
-                                          </span>
-                                        ) : (
-                                          <span>Out of Stock</span>
-                                        )}
-                                      </Table.Cell>
-                                      <Table.Cell>
-                                        <NextLink
-                                          className="px-2 py-1 rounded-md bg-slate-400 text-slate-200"
-                                          href={`/dashboard/issuebook/${router.query.userid}/${val.bookId}`}
-                                        >
-                                          Issue
-                                        </NextLink>
-                                      </Table.Cell>
-                                    </Table.Row>
-                                  );
-                                })}
+                                      Issue
+                                    </NextLink>
+                                  </Table.Cell>
+                                </Table.Row>
+                              );
+                            })
+                          }
                         </Table.Body>
-                      </Table>
+                      </Table> }
                     </div>
                   </div>
                 </form>

@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
         userGender:String,
         userSection:String,
         numOfIssued:{type: Number, default: 0 },
-        bookIssuedList:[{ bookId:Number }]
+        bookIssuedList:[{ bookId:String }]
       }
     ]
   },
@@ -61,6 +61,22 @@ userSchema.methods.addUser = async function(userData){
     console.log(error);
   }
 }
+
+userSchema.methods.addBookId = async function(data, index){
+
+  try {
+    this.usersList[index].bookIssuedList = this.usersList[index].bookIssuedList.concat(data);
+    await this.save();
+    return this.usersList;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
+
 
 
 mongoose.models = {};

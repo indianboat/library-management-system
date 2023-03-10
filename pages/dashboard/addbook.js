@@ -113,7 +113,7 @@ const AddBook = ({ data, token }) => {
     } = bookData;
 
     try {
-      const res = await fetch("/api/books/newbook", {
+      const res = await fetch("/api/librarydata/newbook", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -163,7 +163,7 @@ const AddBook = ({ data, token }) => {
   const updateLibId = async () => {
 
     try {
-      const res = await fetch(`/api/books/${user_id}`, {
+      const res = await fetch(`/api/librarydata/${user_id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

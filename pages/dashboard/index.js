@@ -21,7 +21,7 @@ export async function getServerSideProps(ctx) {
     const res = await fetch(process.env.NODE_ENV == "production" ? `${process.env.production}/api/users/${token_value.id}` : `${process.env.local}/api/users/${token_value.id}`);
 
     const data = await res.json();
-    const bookFetch = await fetch(process.env.NODE_ENV == "production" ? `${process.env.production}/api/books/${data.libraryInfo.libraryId}` : `${process.env.local}/api/books/${data.libraryInfo.libraryId}`);
+    const bookFetch = await fetch(process.env.NODE_ENV == "production" ? `${process.env.production}/api/librarydata/${data.libraryInfo.libraryId}` : `${process.env.local}/api/librarydata/${data.libraryInfo.libraryId}`);
   
     const books = await bookFetch.json();
     return {

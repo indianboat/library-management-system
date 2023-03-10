@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NextLink from "next/link";
 import { useFormik } from "formik";
+import btoa from "btoa";
 
 export async function getServerSideProps(ctx) {
   const { token } = parseCookies(ctx);
@@ -186,7 +187,10 @@ const IssueBook = ({ data, token }) => {
                             <Table.Cell>
                               <NextLink
                                 className="px-2 py-1 rounded-md bg-slate-400 text-slate-200"
-                                href={`/dashboard/issuebook/${val._id}`}
+                                href={{ 
+                                  pathname:`/dashboard/issuebook/${btoa(val._id)}`,
+                                  query:{ library:btoa(libId) }
+                               }}
                               >
                                 Issue Book
                               </NextLink>
