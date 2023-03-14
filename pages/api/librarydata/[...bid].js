@@ -31,10 +31,12 @@ const handler = async (req, res) => {
     }
   } else if (req.method === "PATCH") {
     const library_id = req.query.bid[0];
-    const userIndex = req.query.bid[1];
-    const bid = req.query.bid[2];
+    const userIdNum = req.query.bid[1];
+    const userIndex = req.query.bid[2];
+    const bid = req.query.bid[3];
     const { issuedDate, returnDate } = req.body;
     let bookQuantity;
+    let numOfIssued;
 
     try {
 
@@ -45,7 +47,16 @@ const handler = async (req, res) => {
       });
 
       await Book.findOneAndUpdate({library_id, "bookList.bookId":bid}, { "bookList.$.bookQuantity": bookQuantity > 0 ? bookQuantity-1 : 0 });
-      await UsersInfo.findOneAndUpdate({"libraryInfo.libraryId":library_id, usersList. })
+
+      (await UsersInfo.findOne({"libraryInfo.libraryId":library_id})).usersList.map((item)=>{
+        if(item.userIdNumber == userIdNum){
+          numOfIssued = item.numOfIssued;
+        }
+      })
+
+
+
+      await UsersInfo.findOneAndUpdate({"libraryInfo.libraryId":library_id, "usersList.userIdNumber":userIdNum }, {"usersList.$.numOfIssued": numOfIssued >= 0 ? numOfIssued+1 : numOfIssued  })
       const userData = await UsersInfo.findOne({ "libraryInfo.libraryId": library_id });
       await userData.addBookId({ bookId: bid, issuedDate, returnDate }, userIndex );
       const result = await userData.save();

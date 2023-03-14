@@ -188,7 +188,7 @@ const IssueBook = ({ data, token }) => {
                                 </Text>
                               </Row>
                             </Table.Cell>
-                            <Table.Cell>{val.userNumOfIssued}</Table.Cell>
+                            <Table.Cell>{val.numOfIssued}</Table.Cell>
                             <Table.Cell>
                               <NextLink
                                 className="px-2 py-1 rounded-md bg-slate-400 text-slate-200"

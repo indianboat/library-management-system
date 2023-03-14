@@ -38,13 +38,12 @@ const BookId = ({ token }) => {
   const [bid, setBid] = useState(atob(router.query.bookid));
   const [lid, setlib] = useState(atob(router.query.library));
   const [userIndex, setUserIndex] = useState(router.query.userIndex);
-
+  
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, isLoading } = useSWR(`/api/users/${userid}`, fetcher);
-  const { data: book, isLoading: bookLoading } = useSWR(
-    `/api/librarydata/${lid}/${bid}`,
-    fetcher
-  );
+  const { data: book, isLoading: bookLoading } = useSWR( `/api/librarydata/${lid}/${bid}`, fetcher );
+  
+  const [userIdNum, setUserIdNum] = useState(data.usersList[userIndex].userIdNumber);
 
   const [bookData, setBookData] = useState({});
 
@@ -52,7 +51,7 @@ const BookId = ({ token }) => {
     if (!bookLoading) {
       setBookData(book[0]);
     }
-  }, [bookLoading]);
+  }, [bookLoading, book]);
 
   let today = new DateObject({ format: "DD-MM-YYYY" });
   let returnMaxDate = new DateObject({
@@ -72,7 +71,7 @@ const BookId = ({ token }) => {
 
   async function onSubmit(values) {
     try {
-      const res = await fetch(`/api/librarydata/${lid}/${userIndex}/${bid}`, {
+      const res = await fetch(`/api/librarydata/${lid}/${userIdNum}/${userIndex}/${bid}`, {
         method:"PATCH",
         headers:{
           "Content-Type":"application/json"

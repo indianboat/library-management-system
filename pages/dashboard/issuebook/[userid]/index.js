@@ -36,7 +36,6 @@ const IssueById = ({ token }) => {
   const libraryId = atob(router.query.library);
   const uid = atob(router.query.userid);
   const ind = router.query.userIndex;
-  console.log(ind);
 
   const userid = jwt.decode(token).id;
 
