@@ -22,8 +22,12 @@ export async function getServerSideProps(ctx) {
       },
     };
   } else {
-    const res = await fetch(process.env.NODE_ENV == "production" ? `${process.env.production}/api/users/${token_value.id}` : `${process.env.local}/api/users/${token_value.id}`);
-    
+    const res = await fetch(
+      process.env.NODE_ENV == "production"
+        ? `${process.env.production}/api/users/${token_value.id}`
+        : `${process.env.local}/api/users/${token_value.id}`
+    );
+
     const data = await res.json();
 
     return {
@@ -33,15 +37,14 @@ export async function getServerSideProps(ctx) {
 }
 
 const IssueBook = ({ data, token }) => {
-
   const fName = jwt.decode(token).user_first_name;
   const lName = jwt.decode(token).user_last_name;
 
   const libId = data.libraryInfo.libraryId;
   const formik = useFormik({
-    initialValues:{
-      searchQuery:""
-    }
+    initialValues: {
+      searchQuery: "",
+    },
   });
 
   //table
@@ -113,7 +116,9 @@ const IssueBook = ({ data, token }) => {
                         else if (
                           item.userFullName
                             .toLowerCase()
-                            .includes(formik.values.searchQuery.toLowerCase()) ||
+                            .includes(
+                              formik.values.searchQuery.toLowerCase()
+                            ) ||
                           item.userIdNumber
                             .toString()
                             .includes(formik.values.searchQuery.toString())
@@ -187,10 +192,12 @@ const IssueBook = ({ data, token }) => {
                             <Table.Cell>
                               <NextLink
                                 className="px-2 py-1 rounded-md bg-slate-400 text-slate-200"
-                                href={{ 
-                                  pathname:`/dashboard/issuebook/${btoa(val._id)}`,
-                                  query:{ library:btoa(libId) }
-                               }}
+                                href={{
+                                  pathname: `/dashboard/issuebook/${btoa(
+                                    val._id
+                                  )}`,
+                                  query: { library: btoa(libId), userIndex:key },
+                                }}
                               >
                                 Issue Book
                               </NextLink>

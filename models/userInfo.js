@@ -4,80 +4,72 @@ const userSchema = new mongoose.Schema(
   {
     fname: String,
     lname: String,
-    email:  { type:String, unique:true, },
+    email: { type: String, unique: true },
     password: String,
     accountActive: { type: Boolean, default: true },
     libraryInfo: {
       libraryActive: { type: Boolean, default: false },
-      libraryId:String,
+      libraryId: String,
       libraryName: String,
       libraryType: String,
       librarianPhone: String,
-      libraryAddress: String
+      libraryAddress: String,
     },
-    booksInfo:{
-      totalBooks:{type:Number, default:0},
-      issuedBooks:{type:Number, default:0},
-      returnedBooks:{type:Number, default:0},
-      availableBooks:{type:Number, default:0},
+    booksInfo: {
+      totalBooks: { type: Number, default: 0 },
+      issuedBooks: { type: Number, default: 0 },
+      returnedBooks: { type: Number, default: 0 },
+      availableBooks: { type: Number, default: 0 },
     },
-    usersList:[
+    usersList: [
       {
-        userType:String,
-        userIdProof:String,
-        userIdNumber:String,
-        userFullName:String,
-        userEmailId:String,
-        userMobilePhone:String,
-        userAddress:String,
-        userCourseName:String,
-        userClassName:String,
-        userEducation:String,
-        userSchoolName:String,
-        userSchoolStandard:String,
-        userCollegeName:String,
-        userGender:String,
-        userDOB:Date,
-        userBatch:String,
-        userGender:String,
-        userSection:String,
-        numOfIssued:{type: Number, default: 0 },
-        bookIssuedList:[{ bookId:String }]
-      }
-    ]
+        userType: String,
+        userIdProof: String,
+        userIdNumber: String,
+        userFullName: String,
+        userEmailId: String,
+        userMobilePhone: String,
+        userAddress: String,
+        userCourseName: String,
+        userClassName: String,
+        userEducation: String,
+        userSchoolName: String,
+        userSchoolStandard: String,
+        userCollegeName: String,
+        userGender: String,
+        userDOB: Date,
+        userBatch: String,
+        userGender: String,
+        userSection: String,
+        numOfIssued: { type: Number, default: 0 },
+        bookIssuedList: [
+          { bookId: String, issuedDate: Date, returnDate: Date },
+        ],
+      },
+    ],
   },
   { timestamps: true }
 );
 
-
-
-userSchema.methods.addUser = async function(userData){
-  try{
+userSchema.methods.addUser = async function (userData) {
+  try {
     this.usersList = this.usersList.concat(userData);
     await this.save();
     return this.usersList;
-  }
-  catch(error){
+  } catch (error) {
     console.log(error);
   }
-}
+};
 
-userSchema.methods.addBookId = async function(data, index){
-
+userSchema.methods.addBookId = async function (data, index) {
   try {
     this.usersList[index].bookIssuedList = this.usersList[index].bookIssuedList.concat(data);
     await this.save();
     return this.usersList;
-
   } catch (error) {
     console.log(error);
   }
-}
-
-
-
-
-
+};
 
 mongoose.models = {};
 const UsersInfo = mongoose.model("usersinfo", userSchema);

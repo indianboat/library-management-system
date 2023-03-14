@@ -11,7 +11,7 @@ import btoa from "btoa";
 
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Table, Row, Text, Badge } from "@nextui-org/react";
+import { Table, Row, Text, Badge, Link, Button } from "@nextui-org/react";
 import NextLink from "next/link";
 
 export async function getServerSideProps(ctx) {
@@ -32,16 +32,21 @@ export async function getServerSideProps(ctx) {
 }
 
 const IssueById = ({ token }) => {
-
   const router = useRouter();
   const libraryId = atob(router.query.library);
   const uid = atob(router.query.userid);
+  const ind = router.query.userIndex;
+  console.log(ind);
 
   const userid = jwt.decode(token).id;
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, isLoading } = useSWR(`/api/users/${userid}`, fetcher);
-  const { data: books, error, isLoading: booksLoading } = useSWR(`/api/librarydata/${libraryId}`,fetcher );
+  const {
+    data: books,
+    error,
+    isLoading: booksLoading,
+  } = useSWR(`/api/librarydata/${libraryId}`, fetcher);
 
   let user = [];
   let allBooks = [];
@@ -55,10 +60,9 @@ const IssueById = ({ token }) => {
     }
   }
 
-  if(!booksLoading){
-
+  if (!booksLoading) {
     const libId = books.library_id;
-    if(atob(router.query.library) === libId){
+    if (atob(router.query.library) === libId) {
       for (let i = 0; i < books.bookList.length; i++) {
         const element = books.bookList[i];
         allBooks.push(element);
@@ -76,6 +80,7 @@ const IssueById = ({ token }) => {
     { name: "BOOK ID", uid: "bookId" },
     { name: "TITLE", uid: "bookTitle" },
     { name: "AUTHOR", uid: "authorName" },
+    { name: "QUANTITY", uid: "bookQuantity" },
     { name: "STATUS", uid: "stockStatus" },
     { name: "ACTION", uid: "action" },
   ];
@@ -117,94 +122,104 @@ const IssueById = ({ token }) => {
                       />
                     </div>
                     <div className="flex flex-col mt-4">
-                      {
-                        isLoading ? <Skeleton count={5}/>
-                      : <Table
-                        className="border-0"
-                        aria-label="books-data"
-                        css={{
-                          height: "auto",
-                          minWidth: "100%",
-                          zIndex: "0",
-                        }}
-                      >
-                        <Table.Header
-                          columns={bookColumns}
-                          className="select-none"
+                      {isLoading ? (
+                        <Skeleton count={5} />
+                      ) : (
+                        <Table
+                          bordered={false}
+                          aria-label="books-data"
+                          css={{
+                            height: "auto",
+                            minWidth: "100%",
+                            zIndex: "0",
+                          }}
                         >
-                          {(cols) => (
-                            <Table.Column key={cols.uid}>
-                              {cols.name}
-                            </Table.Column>
-                          )}
-                        </Table.Header>
-                        <Table.Body>
-                          {
-                            allBooks.filter((bookname) => {
-                              if (formik.values.bookQuery === "")
-                                return bookname;
-                              else if (
-                                bookname.bookTitle
-                                  .toLowerCase()
-                                  .includes(
-                                    formik.values.bookQuery.toLowerCase()
-                                  ) ||
-                                bookname.bookId
-                                  .toString()
-                                  .includes(
-                                    formik.values.bookQuery.toString()
-                                  ) ||
-                                bookname.authorName
-                                  .toLowerCase()
-                                  .includes(
-                                    formik.values.bookQuery.toLowerCase()
-                                  )
-                              ) {
-                                return bookname;
-                              }
-                            })
-                            .map((val, key) => {
-                              return (
-                                <Table.Row key={key} className="select-none">
-                                  <Table.Cell>
-                                    <Row>
-                                      <Text
-                                        b
-                                        size={14}
-                                        css={{ tt: "capitalize" }}
-                                        className="select-none"
-                                      >
-                                        {val.bookId}
-                                      </Text>
-                                    </Row>
-                                  </Table.Cell>
-                                  <Table.Cell>{val.bookTitle}</Table.Cell>
-                                  <Table.Cell>{val.authorName}</Table.Cell>
-                                  <Table.Cell>
-                                    {val.outOfStock == false ? (
-                                      <Badge color="success" variant="flat">
-                                        Available
-                                      </Badge>
-                                    ) : (
-                                      <Badge color="error" variant="flat">Out of Stock</Badge>
-                                    )}
-                                  </Table.Cell>
-                                  <Table.Cell>
-                                    <NextLink
-                                      className="px-2 py-1 rounded-md bg-slate-400 text-slate-200"
-                                      href={{ pathname: `/dashboard/issuebook/${router.query.userid}/bookdata`, 
-                                      query: {bookid : btoa(val.bookId), library: router.query.library } 
-                                    }}
-                                    >
-                                      Issue
-                                    </NextLink>
-                                  </Table.Cell>
-                                </Table.Row>
-                              );
-                            })
-                          }
-                        </Table.Body>
-                      </Table> }
+                          <Table.Header
+                            columns={bookColumns}
+                            className="select-none"
+                          >
+                            {(cols) => (
+                              <Table.Column key={cols.uid} css={{textAlign:"center"}}>
+                                {cols.name}
+                              </Table.Column>
+                            )}
+                          </Table.Header>
+                          <Table.Body css={{textAlign:"center"}}>
+                            {allBooks
+                              .filter((bookname) => {
+                                if (formik.values.bookQuery === "")
+                                  return bookname;
+                                else if (
+                                  bookname.bookTitle
+                                    .toLowerCase()
+                                    .includes(
+                                      formik.values.bookQuery.toLowerCase()
+                                    ) ||
+                                  bookname.bookId
+                                    .toString()
+                                    .includes(
+                                      formik.values.bookQuery.toString()
+                                    ) ||
+                                  bookname.authorName
+                                    .toLowerCase()
+                                    .includes(
+                                      formik.values.bookQuery.toLowerCase()
+                                    )
+                                ) {
+                                  return bookname;
+                                }
+                              })
+                              .map((val, key) => {
+                                return (
+                                  <Table.Row key={key} className="select-none" >
+                                    <Table.Cell css={{cursor:"auto"}}>
+                                      <Row css={{textAlign:"center", justifyContent:"center"}}>
+                                        <Text
+                                          b
+                                          size={14}
+                                          css={{ tt: "capitalize" }}
+                                          className="select-none"
+                                        >
+                                          {val.bookId}
+                                        </Text>
+                                      </Row>
+                                    </Table.Cell>
+                                    <Table.Cell css={{cursor:"auto"}}>{val.bookTitle}</Table.Cell>
+                                    <Table.Cell css={{cursor:"auto"}}>{val.authorName}</Table.Cell>
+                                    <Table.Cell css={{cursor:"auto", width:"fit-content"}}>{val.bookQuantity}</Table.Cell>
+                                    <Table.Cell css={{cursor:"auto"}}>
+                                      {val.outOfStock == false && val.bookQuantity != 0 ? (
+                                        <Badge color="success" enableShadow disableOutline variant="flat">
+                                          Available
+                                        </Badge>
+                                      ) : (
+                                        <Badge color="error" enableShadow disableOutline variant="flat">
+                                          Out of Stock
+                                        </Badge>
+                                      )}
+                                    </Table.Cell>
+                                    <Table.Cell css={{cursor:"auto", d:"flex", justifyContent:"center"}}>
+                                      <Button auto disabled={val.outOfStock == false && val.bookQuantity != 0 ? false : true} className="px-2 py-1 rounded-2xl w-1/2 bg-slate-400 text-slate-200">
+                                        <NextLink
+                                          href={{
+                                            pathname: `/dashboard/issuebook/${router.query.userid}/bookdata`,
+                                            query: {
+                                              bookid: btoa(val.bookId),
+                                              library: router.query.library,
+                                              userIndex: ind,
+                                            },
+                                          }}
+                                        >
+                                          Issue
+                                        </NextLink>
+                                      </Button>
+                                    </Table.Cell>
+                                  </Table.Row>
+                                );
+                              })}
+                          </Table.Body>
+                        </Table>
+                      )}
                     </div>
                   </div>
                 </form>

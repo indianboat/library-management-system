@@ -37,6 +37,7 @@ const BookId = ({ token }) => {
   const userid = jwt.decode(token).id;
   const [bid, setBid] = useState(atob(router.query.bookid));
   const [lid, setlib] = useState(atob(router.query.library));
+  const [userIndex, setUserIndex] = useState(router.query.userIndex);
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, isLoading } = useSWR(`/api/users/${userid}`, fetcher);
@@ -71,7 +72,7 @@ const BookId = ({ token }) => {
 
   async function onSubmit(values) {
     try {
-      const res = await fetch(`/api/librarydata/${lid}/${bid}`, {
+      const res = await fetch(`/api/librarydata/${lid}/${userIndex}/${bid}`, {
         method:"PATCH",
         headers:{
           "Content-Type":"application/json"
@@ -81,7 +82,6 @@ const BookId = ({ token }) => {
 
       const data = res.json();
       console.log(data.message);
-
 
     } catch (error) {
       toast.error(error)
@@ -107,11 +107,7 @@ const BookId = ({ token }) => {
           <div className="w-full">
             <div className="px-4 py-4 rounded-xl space-y-4 shadow-xl shadow-slate-200 bg-white">
               <Text className="text-2xl">
-                {!bookLoading ? (
-                  `Book Title : ${bookData.bookTitle}`
-                ) : (
-                  <Skeleton baseColor="#ECF1FA" height={20} width={300} />
-                )}
+                { !bookLoading ? ( `Book Title : ${bookData.bookTitle}` ) : ( <Skeleton baseColor="#ECF1FA" height={20} width={300} /> )}
               </Text>
               <Text className="text-xl font-semibold">
                 {!isLoading ? (
